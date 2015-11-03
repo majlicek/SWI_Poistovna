@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>sk.upjs.ics</groupId>
-  <artifactId>SwiPoistovna</artifactId>
+  <artifactId>SWI_Poistovna_git</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>SwiPoistovna</name>
+  <name>SWI_Poistovna_git</name>
   <url>http://maven.apache.org</url>
 
   <properties>
