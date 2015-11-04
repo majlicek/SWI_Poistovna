@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>sk.upjs.ics</groupId>
-  <artifactId>SwiPoistovna</artifactId>
+  <artifactId>SWI_Poistovna_git</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>SwiPoistovna</name>
+  <name>SWI_Poistovna_git</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -20,6 +20,18 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.37</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>uk</version>
+      <type>jar</type>
     </dependency>
   </dependencies>
 </project>
