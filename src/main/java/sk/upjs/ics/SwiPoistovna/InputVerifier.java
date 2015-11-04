@@ -15,7 +15,7 @@ public class InputVerifier {
      * @return {@code true} if input text consists of numbers only. else returns
      * {@code false}.
      */
-    static boolean inputIsValidNumber(String input) {
+    public static boolean inputIsValidNumber(String input) {
         return input.matches("(-?\\d+(\\.\\d+)?)");
     }
     
@@ -28,7 +28,7 @@ public class InputVerifier {
      * @return {@code true} if input text consists of 0-9 chars only. 
      * else returns {@code false}.
      */
-    static boolean inputContainsNumbersOnly(String input) {
+    public static boolean inputContainsNumbersOnly(String input) {
 
         for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) < '0' || input.charAt(i) > '9') {
@@ -50,7 +50,7 @@ public class InputVerifier {
      * @return {@code true} if input number is between from-to numbers 
      * else returns {@code false}.
      */
-    static boolean numberIsBetween(BigDecimal input, double from, double to) {
+    public static boolean numberIsBetween(BigDecimal input, double from, double to) {
 
         if (from > to) {
             double temp = from;
@@ -82,7 +82,7 @@ public class InputVerifier {
      * @return {@code true} if input number is between from-to numbers 
      * else returns {@code false}.
      */
-    static boolean numberIsBetween(BigDecimal input, BigDecimal from, BigDecimal to) {
+    public static boolean numberIsBetween(BigDecimal input, BigDecimal from, BigDecimal to) {
 
         if (from.compareTo(to) == 1) {
             BigDecimal temp = from;
@@ -113,7 +113,7 @@ public class InputVerifier {
      * @return {@code true} if input number is between from-to numbers 
      * else returns {@code false}.
      */
-    static boolean numberIsBetween(double input, double from, double to) {
+    public static boolean numberIsBetween(double input, double from, double to) {
         if (from > to) {
             double temp = from;
             from = to;
@@ -143,7 +143,7 @@ public class InputVerifier {
      * @return {@code true} if input number is between from-to numbers 
      * else returns {@code false}.
      */
-    static boolean numberIsBetween(int input, int from, int to) {
+    public static boolean numberIsBetween(int input, int from, int to) {
         if (from > to) {
             int temp = from;
             from = to;
@@ -173,7 +173,7 @@ public class InputVerifier {
      * @return {@code true} if input number is between from-to numbers 
      * else returns {@code false}.
      */
-    static boolean numberIsBetween(double input, int from, int to) {
+    public static boolean numberIsBetween(double input, int from, int to) {
         if (from > to) {
             int temp = from;
             from = to;
@@ -201,7 +201,7 @@ public class InputVerifier {
      * @return {@code true} if input number is 0 or higher
      * else returns {@code false}.
      */
-    static boolean numberIsPositive(double input) {
+    public static boolean numberIsPositive(double input) {
         return ((input >= 0));
     }
 
