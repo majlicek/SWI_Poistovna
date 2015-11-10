@@ -29,5 +29,17 @@
       <version>4.2</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>spring</groupId>
+      <artifactId>neviem</artifactId>
+      <version>3.1.1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.37</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 </project>
