@@ -25,7 +25,7 @@ public class TlacidlaPanel extends JPanel {
             setLayout(new MigLayout("", "[][fill, grow][][]", "[]"));
             setBackground(Color.white);
 
-            BufferedImage imageHome = ImageIO.read(new File("src\\main\\resources\\swi_home.bmp"));
+            BufferedImage imageHome = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_domov.bmp"));
             domov = new JLabel(new ImageIcon(imageHome));
             add(domov);
             domov.addMouseListener(new MouseListener() {
@@ -56,7 +56,7 @@ public class TlacidlaPanel extends JPanel {
 
             add(new JLabel());
 
-            BufferedImage imageCancel = ImageIO.read(new File("src\\main\\resources\\swi_cancel.bmp"));
+            BufferedImage imageCancel = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_zrus.bmp"));
             zrus = new JLabel(new ImageIcon(imageCancel));
             add(zrus);
             zrus.addMouseListener(new MouseListener() {
@@ -85,7 +85,7 @@ public class TlacidlaPanel extends JPanel {
                 }
             });
 
-            BufferedImage imageOk = ImageIO.read(new File("src\\main\\resources\\swi_ok.bmp"));
+            BufferedImage imageOk = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_ok.bmp"));
             ok = new JLabel(new ImageIcon(imageOk));
             add(ok);
             ok.addMouseListener(new MouseListener() {

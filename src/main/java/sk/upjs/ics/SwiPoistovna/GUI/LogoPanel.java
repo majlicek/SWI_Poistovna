@@ -19,7 +19,7 @@ public class LogoPanel extends JPanel {
             setLayout(new MigLayout("", "[][fill, grow]", "[]"));
             setBackground(Color.white);
 
-            BufferedImage imageLogo = ImageIO.read(new File("src\\main\\resources\\swi_logo.bmp"));
+            BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_logo.bmp"));
             JLabel logo = new JLabel(new ImageIcon(imageLogo));
             add(logo);
         } catch (IOException ex) {

@@ -100,8 +100,8 @@ public class FormularPanel extends JScrollPane {
             szcoRadio.setOpaque(false);
 
             zamestnanyRadio.addActionListener(pracaListener);
-            zamestnanyRadio.addActionListener(pracaListener);
             nezamestnanyRadio.addActionListener(pracaListener);
+            szcoRadio.addActionListener(pracaListener);
 
             add(oddelovac, "cell 0 0");
             add(rokNarodeniaLabel, "cell 1 0");
@@ -160,7 +160,7 @@ public class FormularPanel extends JScrollPane {
                 setPreferredSize(new Dimension(500, 40));
                 setBackground(Color.cyan);
 
-                BufferedImage imageDown = ImageIO.read(new File("src\\main\\resources\\swi_down.bmp"));
+                BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_dole.bmp"));
                 JLabel logo = new JLabel(new ImageIcon(imageDown));
                 add(logo, "cell 0 0");
 
