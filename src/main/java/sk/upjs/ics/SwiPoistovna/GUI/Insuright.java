@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
 
-public class Poistenie extends JFrame {
+public class Insuright extends JFrame {
 
     public enum Stav {
 
@@ -23,11 +23,11 @@ public class Poistenie extends JFrame {
     private FormularPanel formularPanel;
     private VypisPoisteniPanel vypisPoisteniPanel;
 
-    public Poistenie() {
+    public Insuright() {
         setLayout(new MigLayout("", "[fill, grow]", "[][][fill, grow][]"));
         getContentPane().setBackground(Color.white);
         setPreferredSize(new Dimension(600, 550));
-        setTitle("Poistenie");
+        setTitle("Insuright");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         logoPanel = GuiFactory.INSTANCE.getLogoPanel();
@@ -88,7 +88,7 @@ public class Poistenie extends JFrame {
     }
     
     public static void main(String[] args) {
-        Poistenie poistenie = GuiFactory.INSTANCE.getPoistenie();
+        Insuright poistenie = GuiFactory.INSTANCE.getPoistenie();
         poistenie.setVisible(true);
         poistenie.setLocationRelativeTo(CENTER_SCREEN);
     }

@@ -22,6 +22,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
+import sk.upjs.ics.SwiPoistovna.Verifier;
+import sk.upjs.ics.SwiPoistovna.Manager;
 
 public class FormularPanel extends JScrollPane {
 
@@ -54,7 +56,8 @@ public class FormularPanel extends JScrollPane {
         private JRadioButton szcoRadio = new JRadioButton("SZCO");
 
         public ZakladneUdaje() {
-            setLayout(new MigLayout("", "[][][fill, grow][][fill, grow]"));
+            // [oddelovac1][labely][oddelovac2][textFieldy][fill, grow]
+            setLayout(new MigLayout("", "[][][][][fill, grow]"));
             setPreferredSize(new Dimension(500, 70));
             setBackground(Color.cyan);
 
@@ -73,9 +76,12 @@ public class FormularPanel extends JScrollPane {
                 }
             };
 
-            JPanel oddelovac = new JPanel();
-            oddelovac.setPreferredSize(new Dimension(80, 1));
-            oddelovac.setBackground(Color.red);
+            JPanel oddelovac1 = new JPanel();
+            oddelovac1.setPreferredSize(new Dimension(80, 1));
+            oddelovac1.setBackground(Color.red);
+            JPanel oddelovac2 = new JPanel();
+            oddelovac2.setPreferredSize(new Dimension(80, 1));
+            oddelovac2.setBackground(Color.red);
 
             rokNarodeniaText.setMinimumSize(new Dimension(200, 23));
             dobaPoisteniaText.setMinimumSize(new Dimension(200, 23));
@@ -103,8 +109,9 @@ public class FormularPanel extends JScrollPane {
             nezamestnanyRadio.addActionListener(pracaListener);
             szcoRadio.addActionListener(pracaListener);
 
-            add(oddelovac, "cell 0 0");
+            add(oddelovac1, "cell 0 0");
             add(rokNarodeniaLabel, "cell 1 0");
+            add(oddelovac2, "cell 2 0");
             add(rokNarodeniaText, "cell 3 0");
 
             add(dobaPoisteniaLabel, "cell 1 1");
@@ -135,16 +142,49 @@ public class FormularPanel extends JScrollPane {
         }
 
         public boolean skontroluj() {
-            if (rokNarodeniaText.getText().equals("")) {
-                return false;
+            boolean stav = true;
+
+            if (Verifier.skontrolujVek(rokNarodeniaText.getText())) {
+                // vypis chybu
+                stav = false;
             }
-            if (dobaPoisteniaText.getText().equals("")) {
-                return false;
+            if (Verifier.skontrolujDobuPoistenia(dobaPoisteniaText.getText())) {
+                // vypis chybu
+                stav = false;
             }
-            if (zamestnanyRadio.isSelected() && mesacnyPrijemText.getText().equals("")) {
-                return false;
+            if (zamestnanyRadio.isSelected() && Verifier.skontrolujPlat(mesacnyPrijemText.getText())) {
+                // vypis chybu
+                stav = false;
             }
-            return true;
+
+            if (stav) {
+                Manager.INSTANCE.setRokNarodenia(Integer.valueOf(rokNarodeniaText.getText()));
+                Manager.INSTANCE.setDobaPoistenia(Integer.valueOf(dobaPoisteniaText.getText()));
+
+                if (rizikoRadio1.isSelected()) {
+                    Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
+                }
+                if (rizikoRadio2.isSelected()) {
+                    Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.DRUHA);
+                }
+                if (rizikoRadio3.isSelected()) {
+                    Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.TRETIA);
+                }
+
+                if (zamestnanyRadio.isSelected()) {
+                    Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.ZAMESTNANY);
+                    Manager.INSTANCE.setMesacnyPrijem(Integer.valueOf(mesacnyPrijemText.getText()));
+                }
+                if (nezamestnanyRadio.isSelected()) {
+                    Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.NEZAMESTNANY);
+                }
+                if (szcoRadio.isSelected()) {
+                    Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.SZCO);
+                }
+
+            }
+
+            return stav;
         }
 
     }
@@ -156,6 +196,7 @@ public class FormularPanel extends JScrollPane {
 
         public VyberPripoisteniaAktivator() {
             try {
+                // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
                 setLayout(new MigLayout("", "[][fill, grow][][fill, grow][][fill, grow]", "[]"));
                 setPreferredSize(new Dimension(500, 40));
                 setBackground(Color.cyan);
@@ -254,16 +295,58 @@ public class FormularPanel extends JScrollPane {
 
             add(oddelovac, "cell 0 0");
 
-            for (int i = 0; i < poleRadio.size(); i++) {
-                add(poleRadio.get(i), "cell 1 " + i);
-            }
+            /*
+             *for (int i = 0; i < poleRadio.size(); i++) {
+             *add(poleRadio.get(i), "cell 1 " + i);
+             *}
+             */
         }
 
-        public void zablokuj() {
-            for (JRadioButton radioBtn : poleRadio) {
-                radioBtn.setEnabled(false);
+        public void priradPripoistenia() {
+            int index = 0;
+
+            if (Verifier.pridatSmrtUrazom()) {
+                add(smrtUrazomRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatTrvaleNasledky()) {
+                add(trvaleNasledkyRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatTrvaleNasledkyProg()) {
+                add(trvaleNasledkyProgRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatNevyhnutnaLiecba()) {
+                add(nevyhLiecbaRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatPraceneschopnost()) {
+                add(praceneschRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatHospitalizacia()) {
+                add(hospitRadio, "cell 1 " + index);
+                index++;
+            }
+
+            if (Verifier.pridatKritickeChoroby()) {
+                add(kritickeChorobyRadio, "cell 1 " + index);
+                index++;
             }
         }
+        /*
+         * public void zablokuj() {
+         *    for (JRadioButton radioBtn : poleRadio) {
+         *        radioBtn.setEnabled(false);
+         *     }
+         *  }
+         */
     }
 
     public void zmazFormular() {
@@ -271,12 +354,14 @@ public class FormularPanel extends JScrollPane {
         panel.remove(vyberPripoistenia);
         zakladneUdaje = new ZakladneUdaje();
         vyberPripoistenia = new VyberPripoistenia();
+        Manager.INSTANCE.reset();
         panel.add(zakladneUdaje, "cell 0 0");
         panel.updateUI();
     }
 
     public void ukazPripoistenie() {
         zakladneUdaje.zablokuj();
+        vyberPripoistenia.priradPripoistenia();
         panel.add(vyberPripoistenia, "cell 0 2");
         panel.updateUI();
     }
@@ -291,6 +376,5 @@ public class FormularPanel extends JScrollPane {
 
         panel.add(zakladneUdaje, "cell 0 0");
         panel.add(vyberPripoisteniaAktivator, "cell 0 1");
-
     }
 }

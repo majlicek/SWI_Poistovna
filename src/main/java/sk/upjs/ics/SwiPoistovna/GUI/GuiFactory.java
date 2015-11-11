@@ -4,16 +4,16 @@ public enum GuiFactory {
 
     INSTANCE;
 
-    private Poistenie poistenie;
+    private Insuright poistenie;
     private LogoPanel logoPanel;
     private TlacidlaPanel tlacidlaPanel;
     private VyberPoisteniaPanel vyberPoisteniaPanel;
     private FormularPanel formularPanel;
     private VypisPoisteniPanel vypisPoisteniPanel;
 
-    public Poistenie getPoistenie() {
+    public Insuright getPoistenie() {
         if (poistenie == null) {
-            poistenie = new Poistenie();
+            poistenie = new Insuright();
         }
         return poistenie;
     }
@@ -66,5 +66,5 @@ public enum GuiFactory {
     public void tlacidloOk() {
         System.out.println("klik na ok");
     }
-
+    
 }
