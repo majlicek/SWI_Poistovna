@@ -10,10 +10,12 @@ import sk.upjs.ics.SwiPoistovna.DAO.DaoFactory;
  */
 public class App {
 
-    private static DBPoistenieDAO poistenieDao = DaoFactory.INSTANCE.getPoistenieDao();
+ //   private static DBPoistenieDAO poistenieDao = DaoFactory.INSTANCE.getPoistenieDao();
 
     public static void main(String[] args) {
-        System.out.println(poistenieDao.testDb());
+       // System.out.println(poistenieDao.testDb());
+        
+        /*System.out.println(Verifier.pridatNevyhnutnaLiecba("1969"));*/
     }
 
 }

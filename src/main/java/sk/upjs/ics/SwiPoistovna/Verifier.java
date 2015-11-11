@@ -2,8 +2,16 @@ package sk.upjs.ics.SwiPoistovna;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Calendar;
 
 public class Verifier {
+    private static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
+
+    private static final int VEK_MAXIMALNY = 75;
+    private static final int VEK_MINIMALNY = 15;
+    private static final int DOBA_POISTENIA_MINIMALNA = 15;
+    private static final int DOBA_POISTENIA_MAXIMALNA = 75;
+    private static final int NEVYHNUTNA_LIECBA_LIMIT = 65;
 
     /**
      *
@@ -203,27 +211,52 @@ public class Verifier {
 
     public static boolean skontrolujVek(String text) {
         // skontrolovat
+        
+        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false ) {
+            return false;
+        }
+        
+        int vek = SUCASNY_ROK - Integer.parseInt(text);
+
+        if (Verifier.numberIsBetween(vek, VEK_MINIMALNY, VEK_MAXIMALNY)) {
+            return true;
+        }
+
         return false;
     }
 
     public static boolean skontrolujDobuPoistenia(String text) {
-        // skontrolovat
+
+        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false  ) {
+            return false;
+        }
+
+        if (Verifier.numberIsBetween(Integer.parseInt(text), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+            return true;
+        }
+
         return false;
     }
 
     public static boolean skontrolujPlat(String text) {
-        // skontrolovat
-        return false;
+        if (Verifier.inputContainsNumbersOnly(text) == false) {
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean pridatSmrtUrazom() {
         // nie su ziadne obmedzenia => true
+        //TODO
         return true;
+
     }
 
     public static boolean pridatTrvaleNasledky() {
         // nie su ziadne obmedzenia => true
         return true;
+
     }
 
     public static boolean pridatTrvaleNasledkyProg() {
@@ -233,6 +266,11 @@ public class Verifier {
 
     public static boolean pridatNevyhnutnaLiecba() {
         // zistit z udajov z Managera
+        /*
+        if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
+            return false;
+        }
+*/
         return true;
     }
 
