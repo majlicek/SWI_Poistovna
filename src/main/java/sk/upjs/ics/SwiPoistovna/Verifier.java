@@ -12,8 +12,11 @@ public class Verifier {
     private static final int VEK_MINIMALNY = 15;
     private static final int DOBA_POISTENIA_MINIMALNA = 15;
     private static final int DOBA_POISTENIA_MAXIMALNA = 75;
-    private static final int NEVYHNUTNA_LIECBA_LIMIT = 65;
-
+    
+    private static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;
+    private static final int VEKOVY_LIMIT_HOSPITALIZACIA = 65;
+    private static final int VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN = 65;
+    private static final int VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU = 65;
     /**
      *
      * Checks whether the input string is a valid number e.g. -6.87. Character
@@ -210,14 +213,14 @@ public class Verifier {
         return ((input >= 0));
     }
 
-    public static boolean skontrolujVek(String text) {
+    public static boolean skontrolujVek(String plat) {
         // skontrolovat
 
-        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
+        if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
         }
 
-        int vek = SUCASNY_ROK - Integer.parseInt(text);
+        int vek = SUCASNY_ROK - Integer.parseInt(plat);
 
         if (Verifier.numberIsBetween(vek, VEK_MINIMALNY, VEK_MAXIMALNY)) {
             return true;
@@ -226,21 +229,39 @@ public class Verifier {
         return false;
     }
 
-    public static boolean skontrolujDobuPoistenia(String text) {
+    public static boolean skontrolujVek(int rokNarodenia) {
 
-        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
-            return false;
-        }
-
-        if (Verifier.numberIsBetween(Integer.parseInt(text), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+        if (Verifier.numberIsBetween(SUCASNY_ROK - rokNarodenia, VEK_MINIMALNY, VEK_MAXIMALNY)) {
             return true;
         }
 
         return false;
     }
 
-    public static boolean skontrolujPlat(String text) {
-        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
+    public static boolean skontrolujVek(int rokNarodenia, int customMax) {
+
+        if (Verifier.numberIsBetween(SUCASNY_ROK - rokNarodenia, VEK_MINIMALNY, customMax)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean skontrolujDobuPoistenia(String rokNarodenia) {
+
+        if (rokNarodenia.equals("") || Verifier.inputContainsNumbersOnly(rokNarodenia) == false) {
+            return false;
+        }
+
+        if (Verifier.numberIsBetween(Integer.parseInt(rokNarodenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean skontrolujPlat(String plat) {
+        if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
         }
 
@@ -248,46 +269,41 @@ public class Verifier {
     }
 
     public static boolean pridatSmrtUrazom() {
-     // nie su ziadne obmedzenia => true
-        //TODO
-        return true;
+        // nie su ziadne obmedzenia => true
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()));
 
     }
 
     public static boolean pridatTrvaleNasledky() {
         // nie su ziadne obmedzenia => true
-        return true;
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()) && !Manager.INSTANCE.getPripoistenia(2));
 
     }
 
     public static boolean pridatTrvaleNasledkyProg() {
         // nie su ziadne obmedzenia => true
-        return true;
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()) && !Manager.INSTANCE.getPripoistenia(1));
     }
 
     public static boolean pridatNevyhnutnaLiecba() {
-     // zistit z udajov z Managera
-     /*
-         if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
-         return false;
-         }
-         */
-        return true;
+        // zistit z udajov z Managera
+        //TODO
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(),VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU ));
     }
 
     public static boolean pridatPraceneschopnost() {
         // zistit z udajov z Managera
-        return true;
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN) && !(Manager.INSTANCE.getRizikovaSkupina() == Manager.RizikovaSkupina.TRETIA));
     }
 
     public static boolean pridatHospitalizacia() {
         // zistit z udajov z Managera
-        return true;
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_HOSPITALIZACIA));
     }
 
     public static boolean pridatKritickeChoroby() {
         // zistit z udajov z Managera
-        return true;
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_KRITICKE_CHOROBY));
     }
 
 
@@ -296,7 +312,25 @@ public class Verifier {
      *   praceneschopnost, hospitalizacia, kritickeChoroby]
      */
     public static boolean pridatPripoistenie(int i) {
-        return true;
+        switch (i) {
+            case 0:
+                return Verifier.pridatSmrtUrazom();
+            case 1:
+                return Verifier.pridatTrvaleNasledky();
+            case 2:
+                return Verifier.pridatTrvaleNasledkyProg();
+            case 3:
+                return Verifier.pridatNevyhnutnaLiecba();
+            case 4:
+                return Verifier.pridatPraceneschopnost();
+            case 5:
+                return Verifier.pridatHospitalizacia();
+            case 6:
+                return Verifier.pridatKritickeChoroby();
+
+            default:
+                return false;
+        }
     }
 
 }

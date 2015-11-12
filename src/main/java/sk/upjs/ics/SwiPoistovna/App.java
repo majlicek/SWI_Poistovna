@@ -15,7 +15,12 @@ public class App {
     public static void main(String[] args) {
        // System.out.println(poistenieDao.testDb());
         
-        /*System.out.println(Verifier.pridatNevyhnutnaLiecba("1969"));*/
+        /*System.out.println(Verifier.pridatNevyhnutnaLiecba("1969"));
+        Manager.INSTANCE.setDobaPoistenia(55);
+        Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
+        Manager.INSTANCE.setRokNarodenia(1980);
+        Manager.INSTANCE.setPripoistenia(1, true);
+        System.out.println(Verifier.pridatPripoistenie(2));*/
     }
 
 }
