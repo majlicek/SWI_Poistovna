@@ -9,13 +9,12 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -61,18 +60,22 @@ public class FormularPanel extends JScrollPane {
             setPreferredSize(new Dimension(500, 70));
             setBackground(Color.cyan);
 
-            ActionListener pracaListener = new ActionListener() {
+            ActionListener pracovnyPomerListener = new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (zamestnanyRadio.isSelected()) {
                         mesacnyPrijemText.setText("");
                         add(mesacnyPrijemText, "cell 3 5");
-                        updateUI();
-                    } else {
-                        remove(mesacnyPrijemText);
-                        updateUI();
                     }
+                    if (szcoRadio.isSelected()) {
+                        mesacnyPrijemText.setText("");
+                        add(mesacnyPrijemText, "cell 3 7");
+                    }
+                    if (nezamestnanyRadio.isSelected()) {
+                        remove(mesacnyPrijemText);
+                    }
+                    updateUI();
                 }
             };
 
@@ -105,9 +108,9 @@ public class FormularPanel extends JScrollPane {
             nezamestnanyRadio.setOpaque(false);
             szcoRadio.setOpaque(false);
 
-            zamestnanyRadio.addActionListener(pracaListener);
-            nezamestnanyRadio.addActionListener(pracaListener);
-            szcoRadio.addActionListener(pracaListener);
+            zamestnanyRadio.addActionListener(pracovnyPomerListener);
+            nezamestnanyRadio.addActionListener(pracovnyPomerListener);
+            szcoRadio.addActionListener(pracovnyPomerListener);
 
             add(oddelovac1, "cell 0 0");
             add(rokNarodeniaLabel, "cell 1 0");
@@ -154,7 +157,7 @@ public class FormularPanel extends JScrollPane {
                 System.out.println("doba");
                 stav = false;
             }
-            if (zamestnanyRadio.isSelected() && !Verifier.skontrolujPlat(mesacnyPrijemText.getText())) {
+            if ((zamestnanyRadio.isSelected() || szcoRadio.isSelected()) && !Verifier.skontrolujPlat(mesacnyPrijemText.getText())) {
                 // vypis chybu
                 System.out.println("plat");
                 stav = false;
@@ -183,6 +186,7 @@ public class FormularPanel extends JScrollPane {
                 }
                 if (szcoRadio.isSelected()) {
                     Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.SZCO);
+                    Manager.INSTANCE.setMesacnyPrijem(Integer.valueOf(mesacnyPrijemText.getText()));
                 }
 
             }
@@ -260,17 +264,15 @@ public class FormularPanel extends JScrollPane {
 
     private class VyberPripoistenia extends JPanel {
 
-        private JRadioButton[] polePripoistenia = new JRadioButton[7];
+        private JCheckBox[] polePripoistenia = new JCheckBox[7];
 
-        private ButtonGroup skupinaTrvaleNasledky = new ButtonGroup();
-
-        private JRadioButton smrtUrazomRadio = new JRadioButton("smrt sposobena urazom");
-        private JRadioButton trvaleNasledkyRadio = new JRadioButton("trvale nasledky urazu");
-        private JRadioButton trvaleNasledkyProgRadio = new JRadioButton("trvale nasledky urazu s progresivnym plnenim");
-        private JRadioButton nevyhLiecbaRadio = new JRadioButton("denne odskodne za nevyhnutnu liecbu urazu");
-        private JRadioButton praceneschRadio = new JRadioButton("denna davka v pripade praceneschopnosti ");
-        private JRadioButton hospitRadio = new JRadioButton("denna davka v pripade hospitalizacie");
-        private JRadioButton kritickeChorobyRadio = new JRadioButton("kriticke choroby");
+        private JCheckBox smrtUrazomBtn = new JCheckBox("smrt sposobena urazom");
+        private JCheckBox trvaleNasledkyBtn = new JCheckBox("trvale nasledky urazu");
+        private JCheckBox trvaleNasledkyProgBtn = new JCheckBox("trvale nasledky urazu s progresivnym plnenim");
+        private JCheckBox nevyhnutnaLiecbaBtn = new JCheckBox("denne odskodne za nevyhnutnu liecbu urazu");
+        private JCheckBox praceneschopnostBtn = new JCheckBox("denna davka v pripade praceneschopnosti ");
+        private JCheckBox hospitalizaciaBtn = new JCheckBox("denna davka v pripade hospitalizacie");
+        private JCheckBox kritickeChorobyBtn = new JCheckBox("kriticke choroby");
 
         public VyberPripoistenia() {
             setLayout(new MigLayout("", "[][][fill, grow]"));
@@ -281,28 +283,40 @@ public class FormularPanel extends JScrollPane {
             oddelovac.setPreferredSize(new Dimension(80, 1));
             oddelovac.setBackground(Color.red);
 
-            skupinaTrvaleNasledky.add(trvaleNasledkyRadio);
-            skupinaTrvaleNasledky.add(trvaleNasledkyProgRadio);
+            ActionListener trvaleNasledkyListener = new ActionListener() {
 
-            polePripoistenia[0] = smrtUrazomRadio;
-            polePripoistenia[1] = trvaleNasledkyRadio;
-            polePripoistenia[2] = trvaleNasledkyProgRadio;
-            polePripoistenia[3] = nevyhLiecbaRadio;
-            polePripoistenia[4] = praceneschRadio;
-            polePripoistenia[5] = hospitRadio;
-            polePripoistenia[6] = kritickeChorobyRadio;
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if ("trvale nasledky urazu".equals(e.getActionCommand())) {
+                        trvaleNasledkyProgBtn.setSelected(false);
+                    }
+                    if ("trvale nasledky urazu s progresivnym plnenim".equals(e.getActionCommand())) {
+                        trvaleNasledkyBtn.setSelected(false);
+                    }
+                }
+            };
 
-            for (JRadioButton pripBtn : polePripoistenia) {
+            trvaleNasledkyBtn.addActionListener(trvaleNasledkyListener);
+            trvaleNasledkyProgBtn.addActionListener(trvaleNasledkyListener);
+            /*
+             * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
+             *   praceneschopnost, hospitalizacia, kritickeChoroby]
+             */
+            polePripoistenia[0] = smrtUrazomBtn;
+            polePripoistenia[1] = trvaleNasledkyBtn;
+            polePripoistenia[2] = trvaleNasledkyProgBtn;
+            polePripoistenia[3] = nevyhnutnaLiecbaBtn;
+            polePripoistenia[4] = praceneschopnostBtn;
+            polePripoistenia[5] = hospitalizaciaBtn;
+            polePripoistenia[6] = kritickeChorobyBtn;
+
+            for (JCheckBox pripBtn : polePripoistenia) {
                 pripBtn.setOpaque(false);
             }
 
             add(oddelovac, "cell 0 0");
 
-            /*
-             *for (int i = 0; i < poleRadio.size(); i++) {
-             *add(poleRadio.get(i), "cell 1 " + i);
-             *}
-             */
+            // tu sa pridaju vybrane pripoistenia
         }
 
         public void priradPripoistenia() {
@@ -315,50 +329,16 @@ public class FormularPanel extends JScrollPane {
                 }
             }
 
-            /*
-             *if (Verifier.pridatSmrtUrazom()) {
-             * add(smrtUrazomRadio, "cell 1 " + index);
-             *index++;
-             * }
-             *
-             * if (Verifier.pridatTrvaleNasledky()) {
-             * add(trvaleNasledkyRadio, "cell 1 " + index);
-             * index++;
-             *  }
-             *
-             * if (Verifier.pridatTrvaleNasledkyProg()) {
-             * add(trvaleNasledkyProgRadio, "cell 1 " + index);
-             * index++;
-             *  }
-
-             *  if (Verifier.pridatNevyhnutnaLiecba()) {
-             * add(nevyhLiecbaRadio, "cell 1 " + index);
-             * index++;
-             * }
-             *
-             *  if (Verifier.pridatPraceneschopnost()) {
-             * add(praceneschRadio, "cell 1 " + index);
-             *  index++;
-             *  }
-             *
-             * if (Verifier.pridatHospitalizacia()) {
-             * add(hospitRadio, "cell 1 " + index);
-             * index++;
-             * }
-             *
-             * if (Verifier.pridatKritickeChoroby()) {
-             * add(kritickeChorobyRadio, "cell 1 " + index);
-             * index++;
-             * }
-             */
         }
-        /*
-         * public void zablokuj() {
-         *    for (JRadioButton radioBtn : poleRadio) {
-         *        radioBtn.setEnabled(false);
-         *     }
-         *  }
-         */
+
+        public void potvrdPripoistenia() {
+            boolean[] pole = new boolean[polePripoistenia.length];
+            for (int i = 0; i < polePripoistenia.length; i++) {
+                pole[i] = polePripoistenia[i].isSelected();
+            }
+            Manager.INSTANCE.setPripoistenia(pole);
+        }
+
     }
 
     public void zmazFormular() {
@@ -376,6 +356,10 @@ public class FormularPanel extends JScrollPane {
         vyberPripoistenia.priradPripoistenia();
         panel.add(vyberPripoistenia, "cell 0 2");
         panel.updateUI();
+    }
+
+    public void potvrd() {
+        vyberPripoistenia.potvrdPripoistenia();
     }
 
     public FormularPanel() {

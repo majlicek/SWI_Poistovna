@@ -240,58 +240,61 @@ public class Verifier {
     }
 
     public static boolean skontrolujPlat(String text) {
-        if (Verifier.inputContainsNumbersOnly(text) == false) {
+        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
             return false;
         }
 
         return true;
     }
-    /*
-     public static boolean pridatSmrtUrazom() {
+
+    public static boolean pridatSmrtUrazom() {
      // nie su ziadne obmedzenia => true
-     //TODO
-     return true;
+        //TODO
+        return true;
 
-     }
+    }
 
-     public static boolean pridatTrvaleNasledky() {
-     // nie su ziadne obmedzenia => true
-     return true;
+    public static boolean pridatTrvaleNasledky() {
+        // nie su ziadne obmedzenia => true
+        return true;
 
-     }
+    }
 
-     public static boolean pridatTrvaleNasledkyProg() {
-     // nie su ziadne obmedzenia => true
-     return true;
-     }
+    public static boolean pridatTrvaleNasledkyProg() {
+        // nie su ziadne obmedzenia => true
+        return true;
+    }
 
-     public static boolean pridatNevyhnutnaLiecba() {
+    public static boolean pridatNevyhnutnaLiecba() {
      // zistit z udajov z Managera
      /*
-     if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
-     return false;
-     }
-     *//*
-     return true;
-     }
+         if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
+         return false;
+         }
+         */
+        return true;
+    }
 
-     public static boolean pridatPraceneschopnost() {
-     // zistit z udajov z Managera
-     return true;
-     }
+    public static boolean pridatPraceneschopnost() {
+        // zistit z udajov z Managera
+        return true;
+    }
 
-     public static boolean pridatHospitalizacia() {
-     // zistit z udajov z Managera
-     return true;
-     }
+    public static boolean pridatHospitalizacia() {
+        // zistit z udajov z Managera
+        return true;
+    }
 
-     public static boolean pridatKritickeChoroby() {
-     // zistit z udajov z Managera
-     return true;
-     }
+    public static boolean pridatKritickeChoroby() {
+        // zistit z udajov z Managera
+        return true;
+    }
+
+
+    /*
+     * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
+     *   praceneschopnost, hospitalizacia, kritickeChoroby]
      */
-
-
     public static boolean pridatPripoistenie(int i) {
         return true;
     }

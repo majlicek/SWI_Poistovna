@@ -19,6 +19,10 @@ public enum Manager {
     private RizikovaSkupina rizikovaSkupina;
     private PracovnyPomer pracovnyPomer;
     private int mesacnyPrijem;
+    /*
+     * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
+     *   praceneschopnost, hospitalizacia, kritickeChoroby]
+     */
     private boolean[] pripoistenia = new boolean[7];
 
     public void reset() {
@@ -27,6 +31,7 @@ public enum Manager {
         rizikovaSkupina = RizikovaSkupina.PRVA;
         pracovnyPomer = PracovnyPomer.ZAMESTNANY;
         mesacnyPrijem = 0;
+        pripoistenia = new boolean[7];
     }
 
     public int getRokNarodenia() {
@@ -67,6 +72,22 @@ public enum Manager {
 
     public void setMesacnyPrijem(int mesacnyPrijem) {
         this.mesacnyPrijem = mesacnyPrijem;
+    }
+
+    public boolean[] getPripoistenia() {
+        return pripoistenia;
+    }
+
+    public boolean getPripoistenia(int index) {
+        return pripoistenia[index];
+    }
+
+    public void setPripoistenia(boolean[] pripoistenia) {
+        this.pripoistenia = pripoistenia;
+    }
+
+    public void setPripoistenia(int index, boolean stav) {
+        this.pripoistenia[index] = stav;
     }
 
 }
