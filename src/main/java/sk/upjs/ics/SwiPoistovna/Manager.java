@@ -19,7 +19,7 @@ public enum Manager {
     private RizikovaSkupina rizikovaSkupina;
     private PracovnyPomer pracovnyPomer;
     private int mesacnyPrijem;
-    // treba doplnit booleany vybranych pripoisteni
+    private boolean[] pripoistenia = new boolean[7];
 
     public void reset() {
         rokNarodenia = 0;

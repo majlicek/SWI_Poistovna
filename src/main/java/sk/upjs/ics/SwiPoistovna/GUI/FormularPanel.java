@@ -40,9 +40,9 @@ public class FormularPanel extends JScrollPane {
         private JLabel vyberRizikoLabel = new JLabel("Rizikova skupina:");
         private JLabel vyberPracaLabel = new JLabel("Pracovny pomer:");
 
-        private JTextField rokNarodeniaText = new JTextField();
-        private JTextField dobaPoisteniaText = new JTextField();
-        private JTextField mesacnyPrijemText = new JTextField();
+        private JTextField rokNarodeniaText = new JTextField("1993");
+        private JTextField dobaPoisteniaText = new JTextField("20");
+        private JTextField mesacnyPrijemText = new JTextField("500");
 
         private ButtonGroup skupinaRiziko = new ButtonGroup();
         private ButtonGroup skupinaPraca = new ButtonGroup();
@@ -144,16 +144,19 @@ public class FormularPanel extends JScrollPane {
         public boolean skontroluj() {
             boolean stav = true;
 
-            if (Verifier.skontrolujVek(rokNarodeniaText.getText())) {
+            if (!Verifier.skontrolujVek(rokNarodeniaText.getText())) {
                 // vypis chybu
+                System.out.println("vek");
                 stav = false;
             }
-            if (Verifier.skontrolujDobuPoistenia(dobaPoisteniaText.getText())) {
+            if (!Verifier.skontrolujDobuPoistenia(dobaPoisteniaText.getText())) {
                 // vypis chybu
+                System.out.println("doba");
                 stav = false;
             }
-            if (zamestnanyRadio.isSelected() && Verifier.skontrolujPlat(mesacnyPrijemText.getText())) {
+            if (zamestnanyRadio.isSelected() && !Verifier.skontrolujPlat(mesacnyPrijemText.getText())) {
                 // vypis chybu
+                System.out.println("plat");
                 stav = false;
             }
 
@@ -257,7 +260,7 @@ public class FormularPanel extends JScrollPane {
 
     private class VyberPripoistenia extends JPanel {
 
-        private List<JRadioButton> poleRadio = new ArrayList<>();
+        private JRadioButton[] polePripoistenia = new JRadioButton[7];
 
         private ButtonGroup skupinaTrvaleNasledky = new ButtonGroup();
 
@@ -281,16 +284,16 @@ public class FormularPanel extends JScrollPane {
             skupinaTrvaleNasledky.add(trvaleNasledkyRadio);
             skupinaTrvaleNasledky.add(trvaleNasledkyProgRadio);
 
-            poleRadio.add(smrtUrazomRadio);
-            poleRadio.add(trvaleNasledkyRadio);
-            poleRadio.add(trvaleNasledkyProgRadio);
-            poleRadio.add(nevyhLiecbaRadio);
-            poleRadio.add(praceneschRadio);
-            poleRadio.add(hospitRadio);
-            poleRadio.add(kritickeChorobyRadio);
+            polePripoistenia[0] = smrtUrazomRadio;
+            polePripoistenia[1] = trvaleNasledkyRadio;
+            polePripoistenia[2] = trvaleNasledkyProgRadio;
+            polePripoistenia[3] = nevyhLiecbaRadio;
+            polePripoistenia[4] = praceneschRadio;
+            polePripoistenia[5] = hospitRadio;
+            polePripoistenia[6] = kritickeChorobyRadio;
 
-            for (JRadioButton radioBtn : poleRadio) {
-                radioBtn.setOpaque(false);
+            for (JRadioButton pripBtn : polePripoistenia) {
+                pripBtn.setOpaque(false);
             }
 
             add(oddelovac, "cell 0 0");
@@ -305,40 +308,49 @@ public class FormularPanel extends JScrollPane {
         public void priradPripoistenia() {
             int index = 0;
 
-            if (Verifier.pridatSmrtUrazom()) {
-                add(smrtUrazomRadio, "cell 1 " + index);
-                index++;
+            for (int i = 0; i < polePripoistenia.length; i++) {
+                if (Verifier.pridatPripoistenie(i)) {
+                    add(polePripoistenia[i], "cell 1 " + index);
+                    index++;
+                }
             }
 
-            if (Verifier.pridatTrvaleNasledky()) {
-                add(trvaleNasledkyRadio, "cell 1 " + index);
-                index++;
-            }
+            /*
+             *if (Verifier.pridatSmrtUrazom()) {
+             * add(smrtUrazomRadio, "cell 1 " + index);
+             *index++;
+             * }
+             *
+             * if (Verifier.pridatTrvaleNasledky()) {
+             * add(trvaleNasledkyRadio, "cell 1 " + index);
+             * index++;
+             *  }
+             *
+             * if (Verifier.pridatTrvaleNasledkyProg()) {
+             * add(trvaleNasledkyProgRadio, "cell 1 " + index);
+             * index++;
+             *  }
 
-            if (Verifier.pridatTrvaleNasledkyProg()) {
-                add(trvaleNasledkyProgRadio, "cell 1 " + index);
-                index++;
-            }
-
-            if (Verifier.pridatNevyhnutnaLiecba()) {
-                add(nevyhLiecbaRadio, "cell 1 " + index);
-                index++;
-            }
-
-            if (Verifier.pridatPraceneschopnost()) {
-                add(praceneschRadio, "cell 1 " + index);
-                index++;
-            }
-
-            if (Verifier.pridatHospitalizacia()) {
-                add(hospitRadio, "cell 1 " + index);
-                index++;
-            }
-
-            if (Verifier.pridatKritickeChoroby()) {
-                add(kritickeChorobyRadio, "cell 1 " + index);
-                index++;
-            }
+             *  if (Verifier.pridatNevyhnutnaLiecba()) {
+             * add(nevyhLiecbaRadio, "cell 1 " + index);
+             * index++;
+             * }
+             *
+             *  if (Verifier.pridatPraceneschopnost()) {
+             * add(praceneschRadio, "cell 1 " + index);
+             *  index++;
+             *  }
+             *
+             * if (Verifier.pridatHospitalizacia()) {
+             * add(hospitRadio, "cell 1 " + index);
+             * index++;
+             * }
+             *
+             * if (Verifier.pridatKritickeChoroby()) {
+             * add(kritickeChorobyRadio, "cell 1 " + index);
+             * index++;
+             * }
+             */
         }
         /*
          * public void zablokuj() {

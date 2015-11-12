@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.Calendar;
 
 public class Verifier {
+
     private static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
 
     private static final int VEK_MAXIMALNY = 75;
@@ -211,11 +212,11 @@ public class Verifier {
 
     public static boolean skontrolujVek(String text) {
         // skontrolovat
-        
-        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false ) {
+
+        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
             return false;
         }
-        
+
         int vek = SUCASNY_ROK - Integer.parseInt(text);
 
         if (Verifier.numberIsBetween(vek, VEK_MINIMALNY, VEK_MAXIMALNY)) {
@@ -227,7 +228,7 @@ public class Verifier {
 
     public static boolean skontrolujDobuPoistenia(String text) {
 
-        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false  ) {
+        if (text.equals("") || Verifier.inputContainsNumbersOnly(text) == false) {
             return false;
         }
 
@@ -245,47 +246,53 @@ public class Verifier {
 
         return true;
     }
+    /*
+     public static boolean pridatSmrtUrazom() {
+     // nie su ziadne obmedzenia => true
+     //TODO
+     return true;
 
-    public static boolean pridatSmrtUrazom() {
-        // nie su ziadne obmedzenia => true
-        //TODO
-        return true;
+     }
 
-    }
+     public static boolean pridatTrvaleNasledky() {
+     // nie su ziadne obmedzenia => true
+     return true;
 
-    public static boolean pridatTrvaleNasledky() {
-        // nie su ziadne obmedzenia => true
-        return true;
+     }
 
-    }
+     public static boolean pridatTrvaleNasledkyProg() {
+     // nie su ziadne obmedzenia => true
+     return true;
+     }
 
-    public static boolean pridatTrvaleNasledkyProg() {
-        // nie su ziadne obmedzenia => true
-        return true;
-    }
+     public static boolean pridatNevyhnutnaLiecba() {
+     // zistit z udajov z Managera
+     /*
+     if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
+     return false;
+     }
+     *//*
+     return true;
+     }
 
-    public static boolean pridatNevyhnutnaLiecba() {
-        // zistit z udajov z Managera
-        /*
-        if ((SUCASNY_ROK - Integer.parseInt(vek)) > 65 || Verifier.skontrolujVek(vek) == false) {
-            return false;
-        }
-*/
-        return true;
-    }
+     public static boolean pridatPraceneschopnost() {
+     // zistit z udajov z Managera
+     return true;
+     }
 
-    public static boolean pridatPraceneschopnost() {
-        // zistit z udajov z Managera
-        return true;
-    }
+     public static boolean pridatHospitalizacia() {
+     // zistit z udajov z Managera
+     return true;
+     }
 
-    public static boolean pridatHospitalizacia() {
-        // zistit z udajov z Managera
-        return true;
-    }
+     public static boolean pridatKritickeChoroby() {
+     // zistit z udajov z Managera
+     return true;
+     }
+     */
 
-    public static boolean pridatKritickeChoroby() {
-        // zistit z udajov z Managera
+
+    public static boolean pridatPripoistenie(int i) {
         return true;
     }
 
