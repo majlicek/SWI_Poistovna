@@ -92,8 +92,8 @@ public class FormularPanel extends JScrollPane {
                 Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            rokNarodeniaPomoc.setToolTipText("<html> min. 15 <br>max. 75 </html>");
-            dobaPoisteniaPomoc.setToolTipText("<html> min. 15 <br>max. 75 </html>");
+            rokNarodeniaPomoc.setToolTipText("<html> min. "+Verifier.VEK_MINIMALNY+" <br>max. "+Verifier.VEK_MAXIMALNY+" rokov</html>");
+            dobaPoisteniaPomoc.setToolTipText("<html> min. "+Verifier.DOBA_POISTENIA_MINIMALNA+" <br>max. "+Verifier.DOBA_POISTENIA_MAXIMALNA+"</html>");
 
             JPanel oddelovac1 = new JPanel();
             oddelovac1.setPreferredSize(new Dimension(80, 1));

@@ -8,15 +8,17 @@ public class Verifier {
 
     private static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
 
-    private static final int VEK_MAXIMALNY = 75;
-    private static final int VEK_MINIMALNY = 15;
-    private static final int DOBA_POISTENIA_MINIMALNA = 15;
-    private static final int DOBA_POISTENIA_MAXIMALNA = 75;
+    public static final int VEK_MAXIMALNY = 75;
+    public static final int VEK_MINIMALNY = 15;
+    public static final int DOBA_POISTENIA_MINIMALNA = 15;
+    public static final int DOBA_POISTENIA_MAXIMALNA = 75;
     
-    private static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;
-    private static final int VEKOVY_LIMIT_HOSPITALIZACIA = 65;
-    private static final int VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN = 65;
-    private static final int VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU = 65;
+    public static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;
+    public static final int VEKOVY_LIMIT_HOSPITALIZACIA = 65;
+    public static final int VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN = 65;
+    public static final int VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU = 65;
+    
+    
     /**
      *
      * Checks whether the input string is a valid number e.g. -6.87. Character
@@ -212,15 +214,25 @@ public class Verifier {
     static boolean numberIsPositive(double input) {
         return ((input >= 0));
     }
-
-    public static boolean skontrolujVek(String plat) {
+    
+    /**
+     *
+     * Skontroluje, ci dany vek splna pozadovane minimum a neprekracuje limit.
+     *
+     *
+     * @param rokNarodenia {@code String} rok narodenia, ktory bude skontrolovany
+     *
+     * @return {@code true} , ak splna minimum a zaroven neprekracuje maximalny
+     * povoleny vek, inac vrati {@code false}.
+     */
+    public static boolean skontrolujVek(String rokNarodenia) {
         // skontrolovat
 
-        if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
+        if (rokNarodenia.equals("") || Verifier.inputContainsNumbersOnly(rokNarodenia) == false) {
             return false;
         }
 
-        int vek = SUCASNY_ROK - Integer.parseInt(plat);
+        int vek = SUCASNY_ROK - Integer.parseInt(rokNarodenia);
 
         if (Verifier.numberIsBetween(vek, VEK_MINIMALNY, VEK_MAXIMALNY)) {
             return true;
@@ -229,6 +241,16 @@ public class Verifier {
         return false;
     }
 
+    /**
+     *
+     * Skontroluje, ci dany vek splna pozadovane minimum a neprekracuje limit.
+     *
+     *
+     * @param rokNarodenia {@code int} rok narodenia, ktory bude skontrolovany
+     *
+     * @return {@code true} , ak splna minimum a zaroven neprekracuje maximalny
+     * povoleny vek, inac vrati {@code false}.
+     */
     public static boolean skontrolujVek(int rokNarodenia) {
 
         if (Verifier.numberIsBetween(SUCASNY_ROK - rokNarodenia, VEK_MINIMALNY, VEK_MAXIMALNY)) {
@@ -238,6 +260,17 @@ public class Verifier {
         return false;
     }
 
+    /**
+     *
+     * Skontroluje, ci dany vek splna pozadovane minimum a neprekracuje vlastny
+     * stanoveny limit.
+     *
+     * @param rokNarodenia {@code int} rok narodenia, ktory bude skontrolovany
+     * @param customMax {@code customMax} vlastny limit, ktory nema vek prekrocit
+     *
+     * @return {@code true} , ak splna minimum a zaroven neprekracuje vlastny
+     * stanoveny limit, inac vrati {@code false}.
+     */
     public static boolean skontrolujVek(int rokNarodenia, int customMax) {
 
         if (Verifier.numberIsBetween(SUCASNY_ROK - rokNarodenia, VEK_MINIMALNY, customMax)) {
@@ -247,19 +280,38 @@ public class Verifier {
         return false;
     }
 
-    public static boolean skontrolujDobuPoistenia(String rokNarodenia) {
+    /**
+     *
+     * Skontroluje, ci dana doba poistenia splna pozadovane minimum a 
+     * neprekracuje maximalny limit.
+     * 
+     * @param dobaPoistenia {@code String} doba poistenia, ktora bude skontrolovana
+     *
+     * @return {@code true} , ak splna minimum a zaroven neprekracuje maximalny
+     * stanoveny limit, inac vrati {@code false}.
+     */
+    public static boolean skontrolujDobuPoistenia(String dobaPoistenia) {
 
-        if (rokNarodenia.equals("") || Verifier.inputContainsNumbersOnly(rokNarodenia) == false) {
+        if (dobaPoistenia.equals("") || Verifier.inputContainsNumbersOnly(dobaPoistenia) == false) {
             return false;
         }
 
-        if (Verifier.numberIsBetween(Integer.parseInt(rokNarodenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+        if (Verifier.numberIsBetween(Integer.parseInt(dobaPoistenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
             return true;
         }
 
         return false;
     }
 
+    /**
+     *
+     * Skontroluje, ci plat je validny.
+     * 
+     * @param plat {@code String} plat na skontrolovanie
+     *
+     * @return {@code true} , ak plat nie je zaporny, neobsahuje znaky, 
+     * a je celociselny. Inak vrati {@code false}.
+     */
     public static boolean skontrolujPlat(String plat) {
         if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
@@ -268,39 +320,103 @@ public class Verifier {
         return true;
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre smrt urazom podla udajov
+     * od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatSmrtUrazom() {
         // nie su ziadne obmedzenia => true
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()));
 
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky podla udajov
+     * od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatTrvaleNasledky() {
         // nie su ziadne obmedzenia => true
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()) && !Manager.INSTANCE.getPripoistenia(2));
 
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky s 
+     * progresivnym zhrosovanim podla udajov od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatTrvaleNasledkyProg() {
         // nie su ziadne obmedzenia => true
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia()) && !Manager.INSTANCE.getPripoistenia(1));
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre nevyhnutnu liecbu 
+     * podla udajov od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatNevyhnutnaLiecba() {
+
         // zistit z udajov z Managera
         //TODO
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(),VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU ));
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre praceneschopnost 
+     * podla udajov od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatPraceneschopnost() {
         // zistit z udajov z Managera
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN) && !(Manager.INSTANCE.getRizikovaSkupina() == Manager.RizikovaSkupina.TRETIA));
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre hospitalizaciu 
+     * podla udajov od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatHospitalizacia() {
         // zistit z udajov z Managera
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_HOSPITALIZACIA));
     }
 
+    /**
+     *
+     * Skontroluje, ci je mozne pridat pripoistenie pre kriticke choroby 
+     * podla udajov od triedy {@link Manager}.
+     * 
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
+     */
     public static boolean pridatKritickeChoroby() {
         // zistit z udajov z Managera
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_KRITICKE_CHOROBY));
@@ -310,6 +426,25 @@ public class Verifier {
     /*
      * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
      *   praceneschopnost, hospitalizacia, kritickeChoroby]
+     */
+    
+    /**
+     *
+     * Skontroluje, ci je mozne pridat dane pripoistenie liecbu podla udajov od
+     * triedy {@link Manager}.
+     * 
+     * @param i {@code int} vid nizsie:<br>
+     * i = 1 skontroluje narok na pridanie pripoistenia smrt urazom <br>
+     * i = 2 skontroluje narok na pridanie pripoistenia pre trvale nasledky<br>
+     * i = 3 skontroluje narok na pridanie pripoistenia pre trvale nasledky s 
+     * progresivnym zhorsovanim<br>
+     * i = 4 skontroluje narok na pridanie pripoistenia pre nevyhnutnu liecbu<br>
+     * i = 5 skontroluje narok na pridanie pripoistenia pre praceneschopnost<br>
+     * i = 6 skontroluje narok na pridanie pripoistenia pre hospitalizaciu<br>
+     * i = 7 skontroluje narok na pridanie pripoistenia pre kriticke choroby
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie.
+     * Inak vrati {@code false}.
      */
     public static boolean pridatPripoistenie(int i) {
         switch (i) {
