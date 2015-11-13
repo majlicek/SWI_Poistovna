@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import sk.upjs.ics.SwiPoistovna.Verifier;
@@ -32,16 +33,20 @@ public class FormularPanel extends JScrollPane {
     private VyberPripoisteniaAktivator vyberPripoisteniaAktivator = new VyberPripoisteniaAktivator();
     private VyberPripoistenia vyberPripoistenia = new VyberPripoistenia();
 
+    private boolean vyplnenyFormular;
+
     private class ZakladneUdaje extends JPanel {
 
         private JLabel rokNarodeniaLabel = new JLabel("Rok narodenia:");
         private JLabel dobaPoisteniaLabel = new JLabel("Doba poistenia:");
         private JLabel vyberRizikoLabel = new JLabel("Rizikova skupina:");
         private JLabel vyberPracaLabel = new JLabel("Pracovny pomer:");
+        private JLabel rokNarodeniaPomoc = new JLabel("?");
+        private JLabel dobaPoisteniaPomoc = new JLabel("?");
 
-        private JTextField rokNarodeniaText = new JTextField("1993");
-        private JTextField dobaPoisteniaText = new JTextField("20");
-        private JTextField mesacnyPrijemText = new JTextField("500");
+        private JTextField rokNarodeniaText = new JTextField("");
+        private JTextField dobaPoisteniaText = new JTextField("");
+        private JTextField mesacnyPrijemText = new JTextField("");
 
         private ButtonGroup skupinaRiziko = new ButtonGroup();
         private ButtonGroup skupinaPraca = new ButtonGroup();
@@ -56,9 +61,9 @@ public class FormularPanel extends JScrollPane {
 
         public ZakladneUdaje() {
             // [oddelovac1][labely][oddelovac2][textFieldy][fill, grow]
-            setLayout(new MigLayout("", "[][][][][fill, grow]"));
+            setLayout(new MigLayout("", "[fill, grow][][fill, grow][][fill, grow]"));
             setPreferredSize(new Dimension(500, 70));
-            setBackground(Color.cyan);
+            setBackground(Color.white);
 
             ActionListener pracovnyPomerListener = new ActionListener() {
 
@@ -78,6 +83,17 @@ public class FormularPanel extends JScrollPane {
                     updateUI();
                 }
             };
+
+            try {
+                BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\pomoc.bmp"));
+                rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
+                dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
+            } catch (IOException ex) {
+                Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            rokNarodeniaPomoc.setToolTipText("<html> min. 15 <br>max. 75 </html>");
+            dobaPoisteniaPomoc.setToolTipText("<html> min. 15 <br>max. 75 </html>");
 
             JPanel oddelovac1 = new JPanel();
             oddelovac1.setPreferredSize(new Dimension(80, 1));
@@ -112,13 +128,15 @@ public class FormularPanel extends JScrollPane {
             nezamestnanyRadio.addActionListener(pracovnyPomerListener);
             szcoRadio.addActionListener(pracovnyPomerListener);
 
-            add(oddelovac1, "cell 0 0");
+            //add(oddelovac1, "cell 0 0");
             add(rokNarodeniaLabel, "cell 1 0");
-            add(oddelovac2, "cell 2 0");
+            //add(oddelovac2, "cell 2 0");
             add(rokNarodeniaText, "cell 3 0");
+            add(rokNarodeniaPomoc, "cell 3 0");
 
             add(dobaPoisteniaLabel, "cell 1 1");
             add(dobaPoisteniaText, "cell 3 1");
+            add(dobaPoisteniaPomoc, "cell 3 1");
 
             add(vyberRizikoLabel, "cell 1 2");
             add(rizikoRadio1, "cell 3 2");
@@ -198,67 +216,73 @@ public class FormularPanel extends JScrollPane {
 
     private class VyberPripoisteniaAktivator extends JPanel {
 
+        private JLabel tlacidlo = new JLabel();
         private JLabel oznam = new JLabel("Vyberte si pripoistenie");
-        private JLabel error = new JLabel("Nevyplnili ste povinne udaje!");
+
+        //private JTextArea error = new JTextArea("Nespravne vyplnene udaje!");
+        private JLabel error = new JLabel("Nespravne vyplnene udaje!");
 
         public VyberPripoisteniaAktivator() {
+            // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
+            setLayout(new MigLayout("", "[][fill, grow][][fill, grow][][fill, grow]", "[]"));
+            setPreferredSize(new Dimension(500, 40));
+            setBackground(Color.white);
+
             try {
-                // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
-                setLayout(new MigLayout("", "[][fill, grow][][fill, grow][][fill, grow]", "[]"));
-                setPreferredSize(new Dimension(500, 40));
-                setBackground(Color.cyan);
-
                 BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_dole.bmp"));
-                JLabel logo = new JLabel(new ImageIcon(imageDown));
-                add(logo, "cell 0 0");
-
-                error.setVisible(false);
-
-                add(oznam, "cell 2 0");
-                add(error, "cell 4 0");
-
-                MouseListener listener = new MouseListener() {
-
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        if (zakladneUdaje.skontroluj()) {
-                            error.setVisible(false);
-                            ukazPripoistenie();
-                        } else {
-                            error.setVisible(true);
-                        }
-
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        // nepotrebna metoda
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        // nepotrebna metoda
-                    }
-
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
-                        // nepotrebna metoda
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent e) {
-                        // nepotrebna metoda
-                    }
-                };
-
-                addMouseListener(listener);
-                for (int i = 0; i < getComponentCount(); i++) {
-                    getComponent(i).addMouseListener(listener);
-                }
-
+                tlacidlo = new JLabel(new ImageIcon(imageDown));
             } catch (IOException ex) {
                 Logger.getLogger(FormularPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            error.setForeground(Color.red);
+            error.setVisible(false);
+
+            add(tlacidlo, "cell 0 0");
+            add(oznam, "cell 2 0");
+            add(error, "cell 4 0");
+
+            MouseListener listener = new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (zakladneUdaje.skontroluj()) {
+                        ukazError(false);
+                        ukazPripoistenie();
+                    } else {
+                        ukazError(true);
+                    }
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    // nepotrebna metoda
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    // nepotrebna metoda
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    // nepotrebna metoda
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    // nepotrebna metoda
+                }
+            };
+            addMouseListener(listener);
+            for (int i = 0; i < getComponentCount(); i++) {
+                getComponent(i).addMouseListener(listener);
+            }
+        }
+
+        public void ukazError(boolean stav) {
+            error.setVisible(stav);
         }
     }
 
@@ -275,9 +299,10 @@ public class FormularPanel extends JScrollPane {
         private JCheckBox kritickeChorobyBtn = new JCheckBox("kriticke choroby");
 
         public VyberPripoistenia() {
-            setLayout(new MigLayout("", "[][][fill, grow]"));
+            // [oddelovac][checkboxy][fill, grow]
+            setLayout(new MigLayout("", "[fill, grow][][fill, grow]"));
             setPreferredSize(new Dimension(500, 70));
-            setBackground(Color.cyan);
+            setBackground(Color.white);
 
             JPanel oddelovac = new JPanel();
             oddelovac.setPreferredSize(new Dimension(80, 1));
@@ -314,9 +339,7 @@ public class FormularPanel extends JScrollPane {
                 pripBtn.setOpaque(false);
             }
 
-            add(oddelovac, "cell 0 0");
-
-            // tu sa pridaju vybrane pripoistenia
+            //add(oddelovac, "cell 0 0");
         }
 
         public void priradPripoistenia() {
@@ -349,6 +372,7 @@ public class FormularPanel extends JScrollPane {
         Manager.INSTANCE.reset();
         panel.add(zakladneUdaje, "cell 0 0");
         panel.updateUI();
+        vyplnenyFormular = false;
     }
 
     public void ukazPripoistenie() {
@@ -356,10 +380,21 @@ public class FormularPanel extends JScrollPane {
         vyberPripoistenia.priradPripoistenia();
         panel.add(vyberPripoistenia, "cell 0 2");
         panel.updateUI();
+        vyplnenyFormular = true;
     }
 
-    public void potvrd() {
-        vyberPripoistenia.potvrdPripoistenia();
+    public boolean potvrd() {
+        if (vyplnenyFormular) {
+            vyberPripoistenia.potvrdPripoistenia();
+            return true;
+        } else {
+            if (zakladneUdaje.skontroluj()) {
+                vyberPripoistenia.potvrdPripoistenia();
+                return true;
+            }
+        }
+        vyberPripoisteniaAktivator.ukazError(true);
+        return false;
     }
 
     public FormularPanel() {
@@ -368,7 +403,7 @@ public class FormularPanel extends JScrollPane {
         setViewportView(panel);
 
         panel.setLayout(new MigLayout("", "[fill, grow]", ""));
-        panel.setBackground(Color.yellow);
+        panel.setBackground(Color.white);
 
         panel.add(zakladneUdaje, "cell 0 0");
         panel.add(vyberPripoisteniaAktivator, "cell 0 1");

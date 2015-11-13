@@ -4,6 +4,11 @@ public enum Manager {
 
     INSTANCE;
 
+    public enum Poistenie {
+
+        ZIADNE, FIXNA_SUMA, KLESAJUCA_SUMA
+    }
+
     public enum RizikovaSkupina {
 
         PRVA, DRUHA, TRETIA
@@ -14,6 +19,7 @@ public enum Manager {
         ZAMESTNANY, NEZAMESTNANY, SZCO
     }
 
+    private Poistenie poistenie;
     private int rokNarodenia;
     private int dobaPoistenia;
     private RizikovaSkupina rizikovaSkupina;
@@ -32,6 +38,14 @@ public enum Manager {
         pracovnyPomer = PracovnyPomer.ZAMESTNANY;
         mesacnyPrijem = 0;
         pripoistenia = new boolean[7];
+    }
+
+    public Poistenie getPoistenie() {
+        return poistenie;
+    }
+
+    public void setPoistenie(Poistenie poistenie) {
+        this.poistenie = poistenie;
     }
 
     public int getRokNarodenia() {

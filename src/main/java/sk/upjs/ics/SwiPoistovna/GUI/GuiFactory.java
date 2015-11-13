@@ -64,11 +64,12 @@ public enum GuiFactory {
     }
 
     public void tlacidloOk() {
-        formularPanel.potvrd();
+        if (formularPanel.potvrd()) {
+            
+            System.out.println("treba nahadzat data do vypisu");
 
-        System.out.println("treba nahadzat data do vypisu");
-
-        insuright.zmenNaVypis();
+            insuright.zmenNaVypis();
+        }
     }
 
 }

@@ -16,108 +16,122 @@ import net.miginfocom.swing.MigLayout;
 
 public class TlacidlaPanel extends JPanel {
 
-    JLabel domov;
-    JLabel zrus;
-    JLabel ok;
+    MouseListener domovListener;
+    MouseListener zrusListener;
+    MouseListener okListener;
+
+    JLabel domov = new JLabel("Domov");
+    JLabel zrus = new JLabel("Zrus");
+    JLabel ok = new JLabel("OK");
 
     public TlacidlaPanel() {
-        try {
-            setLayout(new MigLayout("", "[][fill, grow][][]", "[]"));
-            setBackground(Color.white);
 
+        setLayout(new MigLayout("", "[][fill, grow][][]", "[]"));
+        setBackground(Color.white);
+
+        domovListener = new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KlikNaDomov();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        };
+        zrusListener = new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KlikNaZrus();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        };
+        okListener = new MouseListener() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                KlikNaOk();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // nepotrebna metoda
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        };
+
+        try {
             BufferedImage imageHome = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_domov.bmp"));
             domov = new JLabel(new ImageIcon(imageHome));
-            add(domov);
-            domov.addMouseListener(new MouseListener() {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    KlikNaDomov();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-
-            add(new JLabel());
-
-            BufferedImage imageCancel = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_zrus.bmp"));
-            zrus = new JLabel(new ImageIcon(imageCancel));
-            add(zrus);
-            zrus.addMouseListener(new MouseListener() {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    KlikNaZrus();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-
-            BufferedImage imageOk = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_ok.bmp"));
-            ok = new JLabel(new ImageIcon(imageOk));
-            add(ok);
-            ok.addMouseListener(new MouseListener() {
-
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    KlikNaOk();
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    // nepotrebna metoda
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                }
-            });
-
         } catch (IOException ex) {
             Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        try {
+            BufferedImage imageCancel = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_zrus.bmp"));
+            zrus = new JLabel(new ImageIcon(imageCancel));
+        } catch (IOException ex) {
+            Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            BufferedImage imageOk = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_ok.bmp"));
+            ok = new JLabel(new ImageIcon(imageOk));
+        } catch (IOException ex) {
+            Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        domov.addMouseListener(domovListener);
+
+        add(domov, "cell 0 0");
+        add(new JLabel(), "cell 1 0");
+        add(zrus, "cell 2 0");
+        add(ok, "cell 3 0");
     }
 
     private void KlikNaDomov() {
@@ -132,4 +146,13 @@ public class TlacidlaPanel extends JPanel {
         GuiFactory.INSTANCE.tlacidloOk();
     }
 
+    public void FunkcneTlacidla(boolean stav) {
+        if (stav) {
+            zrus.addMouseListener(zrusListener);
+            ok.addMouseListener(okListener);
+        } else {
+            zrus.removeMouseListener(zrusListener);
+            ok.removeMouseListener(okListener);
+        }
+    }
 }

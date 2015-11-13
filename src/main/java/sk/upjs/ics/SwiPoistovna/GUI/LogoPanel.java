@@ -15,16 +15,18 @@ import net.miginfocom.swing.MigLayout;
 public class LogoPanel extends JPanel {
 
     public LogoPanel() {
-        try {
-            setLayout(new MigLayout("", "[][fill, grow]", "[]"));
-            setBackground(Color.white);
 
+        setLayout(new MigLayout("", "[][fill, grow]", "[]"));
+        setBackground(Color.white);
+        JLabel logo = new JLabel("INSURIGHT");
+        try {
             BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_logo.bmp"));
-            JLabel logo = new JLabel(new ImageIcon(imageLogo));
-            add(logo);
+            logo = new JLabel(new ImageIcon(imageLogo));
+
         } catch (IOException ex) {
             Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        add(logo);
 
     }
 

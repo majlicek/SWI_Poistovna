@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
+import sk.upjs.ics.SwiPoistovna.Manager;
 
 public class Insuright extends JFrame {
 
@@ -33,10 +34,11 @@ public class Insuright extends JFrame {
         logoPanel = GuiFactory.INSTANCE.getLogoPanel();
         tlacidlaPanel = GuiFactory.INSTANCE.getTlacidlaPanel();
         vyberPoisteniaPanel = GuiFactory.INSTANCE.getVyberPoisteniaPanel();
+        vypisPoisteniPanel = GuiFactory.INSTANCE.getVypisPoisteniPanel();
 
-        add(logoPanel, "wrap");
-        add(tlacidlaPanel, "wrap");
-        add(vyberPoisteniaPanel, "wrap");
+        add(logoPanel, "cell 0 0");
+        add(tlacidlaPanel, "cell 0 1");
+        add(vyberPoisteniaPanel, "cell 0 2");
 
         pack();
         stav = Stav.VYBER_POISTENIA;
@@ -50,11 +52,13 @@ public class Insuright extends JFrame {
             remove(vypisPoisteniPanel);
         }
         vyberPoisteniaPanel = GuiFactory.INSTANCE.getVyberPoisteniaPanel();
-        add(vyberPoisteniaPanel);
+        add(vyberPoisteniaPanel, "cell 0 2");
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
+        tlacidlaPanel.FunkcneTlacidla(false);
         stav = Stav.VYBER_POISTENIA;
+        Manager.INSTANCE.setPoistenie(Manager.Poistenie.ZIADNE);
     }
 
     public void zmenNaFormular() {
@@ -65,10 +69,11 @@ public class Insuright extends JFrame {
             remove(vypisPoisteniPanel);
         }
         formularPanel = GuiFactory.INSTANCE.getFormularPanel();
-        add(formularPanel);
+        add(formularPanel, "cell 0 2");
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
+        tlacidlaPanel.FunkcneTlacidla(true);
         stav = Stav.FORMULAR;
     }
 
@@ -80,13 +85,14 @@ public class Insuright extends JFrame {
             remove(formularPanel);
         }
         vypisPoisteniPanel = GuiFactory.INSTANCE.getVypisPoisteniPanel();
-        add(vypisPoisteniPanel);
+        add(vypisPoisteniPanel, "cell 0 2");
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
+        tlacidlaPanel.FunkcneTlacidla(false);
         stav = Stav.VYPIS_POISTENI;
     }
-    
+
     public static void main(String[] args) {
         Insuright poistenie = GuiFactory.INSTANCE.getPoistenie();
         poistenie.setVisible(true);

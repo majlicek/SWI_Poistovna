@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import net.miginfocom.swing.MigLayout;
+import sk.upjs.ics.SwiPoistovna.Manager;
 
 public class VyberPoisteniaPanel extends JScrollPane {
 
@@ -79,6 +80,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GuiFactory.INSTANCE.getPoistenie().zmenNaFormular();
+                Manager.INSTANCE.setPoistenie(Manager.Poistenie.FIXNA_SUMA);
             }
 
             @Override
@@ -109,8 +111,9 @@ public class VyberPoisteniaPanel extends JScrollPane {
         MouseListener klesajucaSumaMoznostListener = new MouseListener() {
 
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {               
                 GuiFactory.INSTANCE.getPoistenie().zmenNaFormular();
+                Manager.INSTANCE.setPoistenie(Manager.Poistenie.KLESAJUCA_SUMA);
             }
 
             @Override
