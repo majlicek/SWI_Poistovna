@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 public class Verifier {
 
-    private static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
+    public static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
 
     public static final int VEK_MAXIMALNY = 75;
     public static final int VEK_MINIMALNY = 15;
@@ -430,7 +430,7 @@ public class Verifier {
     
     /**
      *
-     * Skontroluje, ci je mozne pridat dane pripoistenie liecbu podla udajov od
+     * Skontroluje, ci je mozne pridat dane pripoistenie  podla udajov od
      * triedy {@link Manager}.
      * 
      * @param i {@code int} vid nizsie:<br>
