@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -19,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import sk.upjs.ics.SwiPoistovna.Verifier;
@@ -60,9 +58,8 @@ public class FormularPanel extends JScrollPane {
         private JRadioButton szcoRadio = new JRadioButton("SZCO");
 
         public ZakladneUdaje() {
-            // [oddelovac1][labely][oddelovac2][textFieldy][fill, grow]
+            // [fill, grow][labely][fill, grow][textFieldy][fill, grow]
             setLayout(new MigLayout("", "[fill, grow][][fill, grow][][fill, grow]"));
-            setPreferredSize(new Dimension(500, 70));
             setBackground(Color.white);
 
             ActionListener pracovnyPomerListener = new ActionListener() {
@@ -85,22 +82,16 @@ public class FormularPanel extends JScrollPane {
             };
 
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\pomoc.bmp"));
+                BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\pomoc.png"));
                 rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
                 dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
-            } catch (IOException ex) {
-                Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println("nenacitane pomocne info ?");
+                //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            rokNarodeniaPomoc.setToolTipText("<html> min. "+Verifier.VEK_MINIMALNY+" <br>max. "+Verifier.VEK_MAXIMALNY+" rokov</html>");
-            dobaPoisteniaPomoc.setToolTipText("<html> min. "+Verifier.DOBA_POISTENIA_MINIMALNA+" <br>max. "+Verifier.DOBA_POISTENIA_MAXIMALNA+"</html>");
-
-            JPanel oddelovac1 = new JPanel();
-            oddelovac1.setPreferredSize(new Dimension(80, 1));
-            oddelovac1.setBackground(Color.red);
-            JPanel oddelovac2 = new JPanel();
-            oddelovac2.setPreferredSize(new Dimension(80, 1));
-            oddelovac2.setBackground(Color.red);
+            rokNarodeniaPomoc.setToolTipText("<html> min. " + Verifier.VEK_MINIMALNY + " <br>max. " + Verifier.VEK_MAXIMALNY + " rokov</html>");
+            dobaPoisteniaPomoc.setToolTipText("<html> min. " + Verifier.DOBA_POISTENIA_MINIMALNA + " <br>max. " + Verifier.DOBA_POISTENIA_MAXIMALNA + "</html>");
 
             rokNarodeniaText.setMinimumSize(new Dimension(200, 23));
             dobaPoisteniaText.setMinimumSize(new Dimension(200, 23));
@@ -128,9 +119,7 @@ public class FormularPanel extends JScrollPane {
             nezamestnanyRadio.addActionListener(pracovnyPomerListener);
             szcoRadio.addActionListener(pracovnyPomerListener);
 
-            //add(oddelovac1, "cell 0 0");
             add(rokNarodeniaLabel, "cell 1 0");
-            //add(oddelovac2, "cell 2 0");
             add(rokNarodeniaText, "cell 3 0");
             add(rokNarodeniaPomoc, "cell 3 0");
 
@@ -219,20 +208,19 @@ public class FormularPanel extends JScrollPane {
         private JLabel tlacidlo = new JLabel();
         private JLabel oznam = new JLabel("Vyberte si pripoistenie");
 
-        //private JTextArea error = new JTextArea("Nespravne vyplnene udaje!");
         private JLabel error = new JLabel("Nespravne vyplnene udaje!");
 
         public VyberPripoisteniaAktivator() {
             // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
             setLayout(new MigLayout("", "[][fill, grow][][fill, grow][][fill, grow]", "[]"));
-            setPreferredSize(new Dimension(500, 40));
             setBackground(Color.white);
 
             try {
-                BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\swi_dole.bmp"));
+                BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\dole.png"));
                 tlacidlo = new JLabel(new ImageIcon(imageDown));
-            } catch (IOException ex) {
-                Logger.getLogger(FormularPanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println("nenacitane tlacidlo dole");
+                //Logger.getLogger(FormularPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             error.setForeground(Color.red);
@@ -299,14 +287,9 @@ public class FormularPanel extends JScrollPane {
         private JCheckBox kritickeChorobyBtn = new JCheckBox("kriticke choroby");
 
         public VyberPripoistenia() {
-            // [oddelovac][checkboxy][fill, grow]
+            // [fill, grow][checkboxy][fill, grow]
             setLayout(new MigLayout("", "[fill, grow][][fill, grow]"));
-            setPreferredSize(new Dimension(500, 70));
             setBackground(Color.white);
-
-            JPanel oddelovac = new JPanel();
-            oddelovac.setPreferredSize(new Dimension(80, 1));
-            oddelovac.setBackground(Color.red);
 
             ActionListener trvaleNasledkyListener = new ActionListener() {
 
@@ -338,8 +321,6 @@ public class FormularPanel extends JScrollPane {
             for (JCheckBox pripBtn : polePripoistenia) {
                 pripBtn.setOpaque(false);
             }
-
-            //add(oddelovac, "cell 0 0");
         }
 
         public void priradPripoistenia() {
@@ -372,6 +353,7 @@ public class FormularPanel extends JScrollPane {
         Manager.INSTANCE.reset();
         panel.add(zakladneUdaje, "cell 0 0");
         panel.updateUI();
+        vyberPripoisteniaAktivator.ukazError(false);
         vyplnenyFormular = false;
     }
 

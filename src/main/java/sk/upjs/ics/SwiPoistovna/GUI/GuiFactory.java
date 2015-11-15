@@ -11,7 +11,7 @@ public enum GuiFactory {
     private FormularPanel formularPanel;
     private VypisPoisteniPanel vypisPoisteniPanel;
 
-    public Insuright getPoistenie() {
+    public Insuright getInsuright() {
         if (insuright == null) {
             insuright = new Insuright();
         }
@@ -54,9 +54,14 @@ public enum GuiFactory {
     }
 
     public void tlacidloDomov() {
+        vyberPoisteniaPanel = new VyberPoisteniaPanel();
         formularPanel = new FormularPanel();
         vypisPoisteniPanel = new VypisPoisteniPanel();
         insuright.zmenNaVyber();
+    }
+
+    public void tlacidloInfo() {
+        System.out.println("POMOZ SI SAM! hahahaha...");
     }
 
     public void tlacidloZrus() {
@@ -65,7 +70,7 @@ public enum GuiFactory {
 
     public void tlacidloOk() {
         if (formularPanel.potvrd()) {
-            
+
             System.out.println("treba nahadzat data do vypisu");
 
             insuright.zmenNaVypis();

@@ -9,14 +9,18 @@ import sk.upjs.ics.SwiPoistovna.Manager;
 
 public class Insuright extends JFrame {
 
+    private static final Component CENTER_SCREEN = null;
+
+    private static final int SIRKA = 720;
+
+    private static final int VYSKA = 576;
+
     public enum Stav {
 
         VYBER_POISTENIA, FORMULAR, VYPIS_POISTENI
     }
 
     private Stav stav;
-
-    private static final Component CENTER_SCREEN = null;
 
     private LogoPanel logoPanel;
     private TlacidlaPanel tlacidlaPanel;
@@ -27,7 +31,7 @@ public class Insuright extends JFrame {
     public Insuright() {
         setLayout(new MigLayout("", "[fill, grow]", "[][][fill, grow][]"));
         getContentPane().setBackground(Color.white);
-        setPreferredSize(new Dimension(600, 550));
+        setPreferredSize(new Dimension(SIRKA, VYSKA));
         setTitle("Insuright");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -94,7 +98,7 @@ public class Insuright extends JFrame {
     }
 
     public static void main(String[] args) {
-        Insuright poistenie = GuiFactory.INSTANCE.getPoistenie();
+        Insuright poistenie = GuiFactory.INSTANCE.getInsuright();
         poistenie.setVisible(true);
         poistenie.setLocationRelativeTo(CENTER_SCREEN);
     }
