@@ -21,6 +21,15 @@ public class Poistenie {
     private int zadanaSuma;
     private InsurightDAO insurightDAO = DaoFactory.INSTANCE.getInsurightDAO();
     
+    /**
+     *
+     * Vypocita ceny vsetkych poistovni pre danu sadu pripoisteni. Vysledne
+     * sumy je uz potom mozno brat z metod Poistovni, ktore tato metoda vrati.
+     * 
+     *
+     * @return {@code List<Poistovna>} zoznam poistovni, ktore tieto pripoistenia
+     * ponukaju. Z prvkov tohto zoznamu sa uz daju vytiahnut konkretne hodnoty.
+     */
     public List<Poistovna> vypocitajCeny() {
         //TODO
         List<Poistovna> vsetkyPoistovne = insurightDAO.getPoistovne();

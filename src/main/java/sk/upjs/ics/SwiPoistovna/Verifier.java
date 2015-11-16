@@ -12,6 +12,7 @@ public class Verifier {
     public static final int VEK_MINIMALNY = 15;
     public static final int DOBA_POISTENIA_MINIMALNA = 15;
     public static final int DOBA_POISTENIA_MAXIMALNA = 75;
+    public static final int MINIMALNY_PLAT = 380;
     
     public static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;
     public static final int VEKOVY_LIMIT_HOSPITALIZACIA = 65;
@@ -305,7 +306,8 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci plat je validny.
+     * Skontroluje, ci plat je validny a otestuje, ci uzivatel zadal sumu rovnu
+     * aspon minimalnej mzde.
      * 
      * @param plat {@code String} plat na skontrolovanie
      *
@@ -316,6 +318,8 @@ public class Verifier {
         if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
         }
+        if(Integer.parseInt(plat)<380)
+            return false;
 
         return true;
     }

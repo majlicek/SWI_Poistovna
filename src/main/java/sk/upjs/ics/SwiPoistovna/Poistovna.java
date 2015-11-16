@@ -30,6 +30,13 @@ public class Poistovna {
         this.Nazov = nazov;
     }
 
+    
+    /**
+     *
+     * Vrati rocny poplatok vypocitany pre dane Poistenie.
+     * 
+     * @return {@code BigDecimal} , hodnota zaokruhlena na 6 desatinych miest
+     */
     public BigDecimal getCenaRocna() {
         return cenaRocna;
     }
@@ -38,6 +45,12 @@ public class Poistovna {
         this.cenaRocna = cenaRocna;
     }
 
+    /**
+     *
+     * Vrati stvrtrocny poplatok vypocitany pre dane Poistenie.
+     * 
+     * @return {@code BigDecimal} , hodnota zaokruhlena na 6 desatinych miest
+     */
     public BigDecimal getCenaStvrtRocna() {
         return cenaStvrtRocna;
     }
@@ -46,6 +59,12 @@ public class Poistovna {
         this.cenaStvrtRocna = cenaStvrtRocna;
     }
 
+    /**
+     *
+     * Vrati polrocny poplatok vypocitany pre dane Poistenie.
+     * 
+     * @return {@code BigDecimal} , hodnota zaokruhlena na 6 desatinych miest
+     */
     public BigDecimal getCenaPolRocna() {
         return cenaPolRocna;
     }
@@ -54,6 +73,12 @@ public class Poistovna {
         this.cenaPolRocna = cenaPolRocna;
     }
 
+    /**
+     *
+     * Vrati mesacny poplatok vypocitany pre dane Poistenie.
+     * 
+     * @return {@code BigDecimal} , hodnota zaokruhlena na 6 desatinych miest
+     */
     public BigDecimal getCenaMesacna() {
         return cenaMesacna;
     }
