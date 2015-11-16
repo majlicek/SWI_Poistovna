@@ -85,6 +85,11 @@ public class Poistenie {
         
     }
     
+    public Poistenie(int zadanaSuma) {
+        this.zadanaSuma = zadanaSuma;
+        
+    }
+    
     public int getId() {
         return id;
     }

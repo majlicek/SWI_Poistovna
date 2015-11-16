@@ -12,18 +12,20 @@ public class App {
 
     public static void main(String[] args) {
         //heslo na openVpn mam take jak aj na s.ics.upjs...kvrastiak
-        System.out.println(poistenieDao.testDb());
+        if(poistenieDao.testDb())System.out.println("Podarilo sa pripojit k databaze...");
+        else System.out.println("NEPODARILO sa pripojit k databaze...");
         /*List<Poistovna> aa = poistenieDao.getPoistovne();
         System.out.println(aa.get(0).getNazov());*/
 
         
-        Poistenie p  =  new Poistenie(1, "xixi", 1000);
+        Poistenie p  =  new Poistenie(1000);
         Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.ZAMESTNANY);
         Manager.INSTANCE.setDobaPoistenia(15);;
         Manager.INSTANCE.setMesacnyPrijem(1000);
         Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
         Manager.INSTANCE.setRokNarodenia(1990);
         Manager.INSTANCE.setPripoistenia(0, true);
+        Manager.INSTANCE.setPripoistenia(6, true);
         
         List<Poistovna> vyslednePoistovneKtoreBudemePorovnavat = p.vypocitajCeny();
         for(Poistovna poi: vyslednePoistovneKtoreBudemePorovnavat){
