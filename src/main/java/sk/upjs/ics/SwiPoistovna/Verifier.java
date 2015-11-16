@@ -318,7 +318,7 @@ public class Verifier {
         if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
         }
-        if(Integer.parseInt(plat)<380)
+        if(Integer.parseInt(plat)<MINIMALNY_PLAT)
             return false;
 
         return true;
