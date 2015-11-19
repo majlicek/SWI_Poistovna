@@ -34,6 +34,7 @@ public class TlacidlaPanel extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
                 KlikNaDomov();
             }
 
@@ -49,10 +50,12 @@ public class TlacidlaPanel extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(true);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
             }
         };
         infoListener = new MouseListener() {
@@ -74,10 +77,12 @@ public class TlacidlaPanel extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(true);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
             }
         };
         zrusListener = new MouseListener() {
@@ -99,16 +104,19 @@ public class TlacidlaPanel extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(true);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
             }
         };
         okListener = new MouseListener() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
                 KlikNaOk();
             }
 
@@ -124,10 +132,12 @@ public class TlacidlaPanel extends JPanel {
 
             @Override
             public void mouseEntered(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(true);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
+                GuiFactory.INSTANCE.zmenKurzor(false);
             }
         };
 
@@ -163,7 +173,6 @@ public class TlacidlaPanel extends JPanel {
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        domov.addMouseListener(domovListener);
         info.addMouseListener(infoListener);
 
         add(domov, "cell 0 0");
@@ -189,12 +198,20 @@ public class TlacidlaPanel extends JPanel {
         GuiFactory.INSTANCE.tlacidloOk();
     }
 
-    public void FunkcneTlacidla(boolean stav) {
-        if (stav) {
+    public void FunkcneTlacidla(boolean stavDomov, boolean stavZrus, boolean stavOk) {
+        if (stavDomov) {
+            domov.addMouseListener(domovListener);
+        } else {
+            domov.removeMouseListener(domovListener);
+        }
+        if (stavZrus) {
             zrus.addMouseListener(zrusListener);
-            ok.addMouseListener(okListener);
         } else {
             zrus.removeMouseListener(zrusListener);
+        }
+        if (stavOk) {
+            ok.addMouseListener(okListener);
+        } else {
             ok.removeMouseListener(okListener);
         }
     }
