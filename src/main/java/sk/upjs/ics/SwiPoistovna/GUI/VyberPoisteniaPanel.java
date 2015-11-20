@@ -65,6 +65,11 @@ public class VyberPoisteniaPanel extends JScrollPane {
             setBorder(new BevelBorder(2));
         }
     }
+    
+    public void reset(){
+        fixnaSumaMoznost.out();
+        klesajucaSumaMoznost.out();
+    }
 
     private JPanel panel = new JPanel();
 
@@ -154,5 +159,5 @@ public class VyberPoisteniaPanel extends JScrollPane {
         setBorder(null);
         getVerticalScrollBar().setUnitIncrement(4);
     }
-
+    
 }

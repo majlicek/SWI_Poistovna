@@ -60,6 +60,7 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
+        vyberPoisteniaPanel.reset();
         tlacidlaPanel.FunkcneTlacidla(false, false, false);
         stav = Stav.VYBER_POISTENIA;
         Manager.INSTANCE.setPoistenie(Manager.Poistenie.ZIADNE);

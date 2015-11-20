@@ -255,12 +255,12 @@ public class FormularPanel extends JScrollPane {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    // nepotrebna metoda
+                    GuiFactory.INSTANCE.zmenKurzor(true);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    // nepotrebna metoda
+                    GuiFactory.INSTANCE.zmenKurzor(false);
                 }
             };
             addMouseListener(listener);
@@ -358,11 +358,13 @@ public class FormularPanel extends JScrollPane {
     }
 
     public void ukazPripoistenie() {
-        zakladneUdaje.zablokuj();
-        vyberPripoistenia.priradPripoistenia();
-        panel.add(vyberPripoistenia, "cell 0 2");
-        panel.updateUI();
-        vyplnenyFormular = true;
+        if (!vyplnenyFormular) {
+            zakladneUdaje.zablokuj();
+            vyberPripoistenia.priradPripoistenia();
+            panel.add(vyberPripoistenia, "cell 0 2");
+            panel.updateUI();
+            vyplnenyFormular = true;
+        }
     }
 
     public boolean potvrd() {
