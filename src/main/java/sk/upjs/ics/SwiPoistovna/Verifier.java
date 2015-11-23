@@ -10,8 +10,10 @@ public class Verifier {
 
     public static final int VEK_MAXIMALNY = 75;
     public static final int VEK_MINIMALNY = 15;
+    
     public static final int DOBA_POISTENIA_MINIMALNA = 15;
     public static final int DOBA_POISTENIA_MAXIMALNA = 75;
+    
     public static final int MINIMALNY_PLAT = 380;
     
     public static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;

@@ -89,7 +89,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
             public void mouseClicked(MouseEvent e) {
                 GuiFactory.INSTANCE.zmenKurzor(false);
                 GuiFactory.INSTANCE.getInsuright().zmenNaFormular();
-                Manager.INSTANCE.setPoistenie(Manager.Poistenie.FIXNA_SUMA);
+                Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.FIXNA_SUMA);
             }
 
             @Override
@@ -125,7 +125,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
             public void mouseClicked(MouseEvent e) {
                 GuiFactory.INSTANCE.zmenKurzor(false);
                 GuiFactory.INSTANCE.getInsuright().zmenNaFormular();
-                Manager.INSTANCE.setPoistenie(Manager.Poistenie.KLESAJUCA_SUMA);
+                Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.KLESAJUCA_SUMA);
             }
 
             @Override

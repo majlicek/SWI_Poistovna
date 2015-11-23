@@ -6,7 +6,7 @@ import sk.upjs.ics.SwiPoistovna.DAO.DBInsurightDAO;
 import sk.upjs.ics.SwiPoistovna.DAO.DaoFactory;
 
 
-public class App {
+public class PRIKLADY {
 
     private static DBInsurightDAO poistenieDao = DaoFactory.INSTANCE.getInsurightDAO();
 
@@ -17,11 +17,12 @@ public class App {
         /*List<Poistovna> aa = poistenieDao.getPoistovne();
         System.out.println(aa.get(0).getNazov());*/
 
-        
+        /*Priklad ako vypocitat poistenia pre tieto parametre:*/
         Poistenie p  =  new Poistenie(1000);
         Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.ZAMESTNANY);
         Manager.INSTANCE.setDobaPoistenia(15);;
         Manager.INSTANCE.setMesacnyPrijem(1000);
+        Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.KLESAJUCA_SUMA);
         Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
         Manager.INSTANCE.setRokNarodenia(1990);
         Manager.INSTANCE.setPripoistenia(0, true);

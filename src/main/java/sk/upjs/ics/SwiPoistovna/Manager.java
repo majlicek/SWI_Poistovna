@@ -4,7 +4,7 @@ public enum Manager {
 
     INSTANCE;
 
-    public enum Poistenie {
+    public enum TypPoistenia {
 
         ZIADNE, FIXNA_SUMA, KLESAJUCA_SUMA
     }
@@ -19,7 +19,7 @@ public enum Manager {
         ZAMESTNANY, NEZAMESTNANY, SZCO
     }
 
-    private Poistenie poistenie;
+    private TypPoistenia poistenie;
     private int rokNarodenia;
     private int dobaPoistenia;
     private RizikovaSkupina rizikovaSkupina;
@@ -42,11 +42,12 @@ public enum Manager {
         pripoistenia = new boolean[7];
     }
 
-    public Poistenie getPoistenie() {
+    public TypPoistenia getTypPoistenia() {
         return poistenie;
     }
-
-    public void setPoistenie(Poistenie poistenie) {
+    
+    
+    public void setTypPoistenia(TypPoistenia poistenie) {
         this.poistenie = poistenie;
     }
 

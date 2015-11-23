@@ -63,7 +63,7 @@ public class Insuright extends JFrame {
         vyberPoisteniaPanel.reset();
         tlacidlaPanel.FunkcneTlacidla(false, false, false);
         stav = Stav.VYBER_POISTENIA;
-        Manager.INSTANCE.setPoistenie(Manager.Poistenie.ZIADNE);
+        Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.ZIADNE);
     }
 
     public void zmenNaFormular() {
