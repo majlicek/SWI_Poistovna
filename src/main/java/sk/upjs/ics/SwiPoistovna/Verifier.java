@@ -10,18 +10,17 @@ public class Verifier {
 
     public static final int VEK_MAXIMALNY = 75;
     public static final int VEK_MINIMALNY = 15;
-    
+
     public static final int DOBA_POISTENIA_MINIMALNA = 15;
     public static final int DOBA_POISTENIA_MAXIMALNA = 75;
-    
+
     public static final int MINIMALNY_PLAT = 380;
-    
+
     public static final int VEKOVY_LIMIT_KRITICKE_CHOROBY = 65;
     public static final int VEKOVY_LIMIT_HOSPITALIZACIA = 65;
     public static final int VEKOVY_LIMIT_DENNA_DAVKA_POCAS_PN = 65;
     public static final int VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU = 65;
-    
-    
+
     /**
      *
      * Checks whether the input string is a valid number e.g. -6.87. Character
@@ -217,13 +216,14 @@ public class Verifier {
     static boolean numberIsPositive(double input) {
         return ((input >= 0));
     }
-    
+
     /**
      *
      * Skontroluje, ci dany vek splna pozadovane minimum a neprekracuje limit.
      *
      *
-     * @param rokNarodenia {@code String} rok narodenia, ktory bude skontrolovany
+     * @param rokNarodenia {@code String} rok narodenia, ktory bude
+     * skontrolovany
      *
      * @return {@code true} , ak splna minimum a zaroven neprekracuje maximalny
      * povoleny vek, inac vrati {@code false}.
@@ -235,7 +235,12 @@ public class Verifier {
             return false;
         }
 
-        int vek = SUCASNY_ROK - Integer.parseInt(rokNarodenia);
+        int vek = -1;
+        try {
+            vek = SUCASNY_ROK - Verifier.parseInt(rokNarodenia);
+        } catch (Exception e) {
+            return false;
+        }
 
         if (Verifier.numberIsBetween(vek, VEK_MINIMALNY, VEK_MAXIMALNY)) {
             return true;
@@ -269,7 +274,8 @@ public class Verifier {
      * stanoveny limit.
      *
      * @param rokNarodenia {@code int} rok narodenia, ktory bude skontrolovany
-     * @param customMax {@code customMax} vlastny limit, ktory nema vek prekrocit
+     * @param customMax {@code customMax} vlastny limit, ktory nema vek
+     * prekrocit
      *
      * @return {@code true} , ak splna minimum a zaroven neprekracuje vlastny
      * stanoveny limit, inac vrati {@code false}.
@@ -285,10 +291,11 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci dana doba poistenia splna pozadovane minimum a 
+     * Skontroluje, ci dana doba poistenia splna pozadovane minimum a
      * neprekracuje maximalny limit.
-     * 
-     * @param dobaPoistenia {@code String} doba poistenia, ktora bude skontrolovana
+     *
+     * @param dobaPoistenia {@code String} doba poistenia, ktora bude
+     * skontrolovana
      *
      * @return {@code true} , ak splna minimum a zaroven neprekracuje maximalny
      * stanoveny limit, inac vrati {@code false}.
@@ -299,8 +306,12 @@ public class Verifier {
             return false;
         }
 
-        if (Verifier.numberIsBetween(Integer.parseInt(dobaPoistenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
-            return true;
+        try {
+            if (Verifier.numberIsBetween(Verifier.parseInt(dobaPoistenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
         }
 
         return false;
@@ -310,18 +321,24 @@ public class Verifier {
      *
      * Skontroluje, ci plat je validny a otestuje, ci uzivatel zadal sumu rovnu
      * aspon minimalnej mzde.
-     * 
+     *
      * @param plat {@code String} plat na skontrolovanie
      *
-     * @return {@code true} , ak plat nie je zaporny, neobsahuje znaky, 
-     * a je celociselny. Inak vrati {@code false}.
+     * @return {@code true} , ak plat nie je zaporny, neobsahuje znaky, a je
+     * celociselny. Inak vrati {@code false}.
      */
     public static boolean skontrolujPlat(String plat) {
         if (plat.equals("") || Verifier.inputContainsNumbersOnly(plat) == false) {
             return false;
         }
-        if(Integer.parseInt(plat)<MINIMALNY_PLAT)
+
+        try {
+            if (Verifier.parseInt(plat) < MINIMALNY_PLAT) {
+                return false;
+            }
+        } catch (Exception e) {
             return false;
+        }
 
         return true;
     }
@@ -330,10 +347,10 @@ public class Verifier {
      *
      * Skontroluje, ci je mozne pridat pripoistenie pre smrt urazom podla udajov
      * od triedy {@link Manager}.
-     * 
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatSmrtUrazom() {
         // nie su ziadne obmedzenia => true
@@ -343,12 +360,12 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky podla udajov
-     * od triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky podla
+     * udajov od triedy {@link Manager}.
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatTrvaleNasledky() {
         // nie su ziadne obmedzenia => true
@@ -358,12 +375,12 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky s 
+     * Skontroluje, ci je mozne pridat pripoistenie pre trvale nasledky s
      * progresivnym zhrosovanim podla udajov od triedy {@link Manager}.
-     * 
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatTrvaleNasledkyProg() {
         // nie su ziadne obmedzenia => true
@@ -372,28 +389,28 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre nevyhnutnu liecbu 
-     * podla udajov od triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat pripoistenie pre nevyhnutnu liecbu podla
+     * udajov od triedy {@link Manager}.
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatNevyhnutnaLiecba() {
 
         // zistit z udajov z Managera
         //TODO
-        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(),VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU ));
+        return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_NEVYHNUTNA_LIECBA_URAZU));
     }
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre praceneschopnost 
-     * podla udajov od triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat pripoistenie pre praceneschopnost podla
+     * udajov od triedy {@link Manager}.
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatPraceneschopnost() {
         // zistit z udajov z Managera
@@ -402,12 +419,12 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre hospitalizaciu 
-     * podla udajov od triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat pripoistenie pre hospitalizaciu podla
+     * udajov od triedy {@link Manager}.
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatHospitalizacia() {
         // zistit z udajov z Managera
@@ -416,12 +433,12 @@ public class Verifier {
 
     /**
      *
-     * Skontroluje, ci je mozne pridat pripoistenie pre kriticke choroby 
-     * podla udajov od triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat pripoistenie pre kriticke choroby podla
+     * udajov od triedy {@link Manager}.
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     *
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatKritickeChoroby() {
         // zistit z udajov z Managera
@@ -433,24 +450,24 @@ public class Verifier {
      * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
      *   praceneschopnost, hospitalizacia, kritickeChoroby]
      */
-    
     /**
      *
-     * Skontroluje, ci je mozne pridat dane pripoistenie  podla udajov od
-     * triedy {@link Manager}.
-     * 
+     * Skontroluje, ci je mozne pridat dane pripoistenie podla udajov od triedy
+     * {@link Manager}.
+     *
      * @param i {@code int} vid nizsie:<br>
      * i = 1 skontroluje narok na pridanie pripoistenia smrt urazom <br>
      * i = 2 skontroluje narok na pridanie pripoistenia pre trvale nasledky<br>
-     * i = 3 skontroluje narok na pridanie pripoistenia pre trvale nasledky s 
+     * i = 3 skontroluje narok na pridanie pripoistenia pre trvale nasledky s
      * progresivnym zhorsovanim<br>
-     * i = 4 skontroluje narok na pridanie pripoistenia pre nevyhnutnu liecbu<br>
+     * i = 4 skontroluje narok na pridanie pripoistenia pre nevyhnutnu
+     * liecbu<br>
      * i = 5 skontroluje narok na pridanie pripoistenia pre praceneschopnost<br>
      * i = 6 skontroluje narok na pridanie pripoistenia pre hospitalizaciu<br>
      * i = 7 skontroluje narok na pridanie pripoistenia pre kriticke choroby
      *
-     * @return {@code true} ak ma klient narok na toto pripoistenie.
-     * Inak vrati {@code false}.
+     * @return {@code true} ak ma klient narok na toto pripoistenie. Inak vrati
+     * {@code false}.
      */
     public static boolean pridatPripoistenie(int i) {
         switch (i) {
@@ -471,6 +488,14 @@ public class Verifier {
 
             default:
                 return false;
+        }
+    }
+
+    private static int parseInt(String stringToInt) throws Exception {
+        try {
+            return Integer.parseInt(stringToInt);
+        } catch (NumberFormatException e) {
+            throw e;
         }
     }
 
