@@ -237,8 +237,8 @@ public class Verifier {
 
         int vek = -1;
         try {
-            vek = SUCASNY_ROK - Verifier.parseInt(rokNarodenia);
-        } catch (Exception e) {
+            vek = SUCASNY_ROK - Integer.parseInt(rokNarodenia);
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -307,10 +307,10 @@ public class Verifier {
         }
 
         try {
-            if (Verifier.numberIsBetween(Verifier.parseInt(dobaPoistenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
+            if (Verifier.numberIsBetween(Integer.parseInt(dobaPoistenia), DOBA_POISTENIA_MINIMALNA, DOBA_POISTENIA_MAXIMALNA)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -333,10 +333,10 @@ public class Verifier {
         }
 
         try {
-            if (Verifier.parseInt(plat) < MINIMALNY_PLAT) {
+            if (Integer.parseInt(plat) < MINIMALNY_PLAT) {
                 return false;
             }
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -491,12 +491,5 @@ public class Verifier {
         }
     }
 
-    private static int parseInt(String stringToInt) throws Exception {
-        try {
-            return Integer.parseInt(stringToInt);
-        } catch (NumberFormatException e) {
-            throw e;
-        }
-    }
-
+  
 }
