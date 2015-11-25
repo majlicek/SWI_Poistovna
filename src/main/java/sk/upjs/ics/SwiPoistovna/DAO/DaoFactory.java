@@ -15,29 +15,13 @@ public enum DaoFactory {
 
     private JdbcTemplate jdbcTemplate;
 
-    private DBPoistenieDAO poistenieDAO;
-    private DBZakaznikDAO zakaznikDAO;
-    private DBPoistovnaDAO poistovnaDAO;
+    private DBInsurightDAO insurightDAO;
 
-    public DBPoistovnaDAO getPoistovnaDao() {
-        if (this.poistovnaDAO == null) {
-            this.poistovnaDAO = new DBPoistovnaDAO(getJdbcTemplate());
+    public DBInsurightDAO getInsurightDAO() {
+        if (this.insurightDAO == null) {
+            this.insurightDAO = new DBInsurightDAO(getJdbcTemplate());
         }
-        return this.poistovnaDAO;
-    }
-
-    public DBZakaznikDAO getZakaznikDao() {
-        if (this.zakaznikDAO == null) {
-            this.zakaznikDAO = new DBZakaznikDAO(getJdbcTemplate());
-        }
-        return this.zakaznikDAO;
-    }
-
-    public DBPoistenieDAO getPoistenieDao() {
-        if (this.poistenieDAO == null) {
-            this.poistenieDAO = new DBPoistenieDAO(getJdbcTemplate());
-        }
-        return this.poistenieDAO;
+        return this.insurightDAO;
     }
 
     public JdbcTemplate getJdbcTemplate() {

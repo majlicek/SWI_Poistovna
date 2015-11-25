@@ -82,7 +82,7 @@ public class FormularPanel extends JScrollPane {
             };
 
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\pomoc.png"));
+                BufferedImage imageLogo = ImageIO.read(new File("src/main/java/sk/upjs/ics/SwiPoistovna/GUI/obrazky/pomoc.png"));
                 rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
                 dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
@@ -216,7 +216,7 @@ public class FormularPanel extends JScrollPane {
             setBackground(Color.white);
 
             try {
-                BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\dole.png"));
+                BufferedImage imageDown = ImageIO.read(new File("src/main/java/sk/upjs/ics/SwiPoistovna/GUI/obrazky/dole.png"));
                 tlacidlo = new JLabel(new ImageIcon(imageDown));
             } catch (Exception ex) {
                 System.out.println("nenacitane tlacidlo dole");
@@ -255,12 +255,12 @@ public class FormularPanel extends JScrollPane {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    // nepotrebna metoda
+                    GuiFactory.INSTANCE.zmenKurzor(true);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    // nepotrebna metoda
+                    GuiFactory.INSTANCE.zmenKurzor(false);
                 }
             };
             addMouseListener(listener);
@@ -358,11 +358,13 @@ public class FormularPanel extends JScrollPane {
     }
 
     public void ukazPripoistenie() {
-        zakladneUdaje.zablokuj();
-        vyberPripoistenia.priradPripoistenia();
-        panel.add(vyberPripoistenia, "cell 0 2");
-        panel.updateUI();
-        vyplnenyFormular = true;
+        if (!vyplnenyFormular) {
+            zakladneUdaje.zablokuj();
+            vyberPripoistenia.priradPripoistenia();
+            panel.add(vyberPripoistenia, "cell 0 2");
+            panel.updateUI();
+            vyplnenyFormular = true;
+        }
     }
 
     public boolean potvrd() {

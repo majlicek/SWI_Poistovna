@@ -1,8 +1,13 @@
 package sk.upjs.ics.SwiPoistovna.GUI;
 
+import java.awt.Cursor;
+
 public enum GuiFactory {
 
     INSTANCE;
+
+    private static int KLASICKY_KURZOR = 0;
+    private static int RUKA_KURZOR = 12;
 
     private Insuright insuright;
     private LogoPanel logoPanel;
@@ -53,8 +58,15 @@ public enum GuiFactory {
         return vypisPoisteniPanel;
     }
 
+    public void zmenKurzor(boolean stav) {
+        if (stav) {
+            insuright.setCursor(Cursor.getPredefinedCursor(RUKA_KURZOR));
+        } else {
+            insuright.setCursor(Cursor.getPredefinedCursor(KLASICKY_KURZOR));
+        }
+    }
+
     public void tlacidloDomov() {
-        vyberPoisteniaPanel = new VyberPoisteniaPanel();
         formularPanel = new FormularPanel();
         vypisPoisteniPanel = new VypisPoisteniPanel();
         insuright.zmenNaVyber();

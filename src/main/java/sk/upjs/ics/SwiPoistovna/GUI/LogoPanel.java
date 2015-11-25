@@ -19,7 +19,7 @@ public class LogoPanel extends JPanel {
         setBackground(Color.white);
         JLabel logo = new JLabel("INSURIGHT");
         try {
-            BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\logo.png"));
+            BufferedImage imageLogo = ImageIO.read(new File("src/main/java/sk/upjs/ics/SwiPoistovna/GUI/obrazky/logo.png"));
             logo = new JLabel(new ImageIcon(imageLogo));
 
         } catch (Exception ex) {
