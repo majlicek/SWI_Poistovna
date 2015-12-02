@@ -8,10 +8,10 @@ public class Verifier {
 
     public static final int SUCASNY_ROK = Calendar.getInstance().get(Calendar.YEAR);
 
-    public static final int VEK_MAXIMALNY = 75;
+    public static final int VEK_MAXIMALNY = 90;
     public static final int VEK_MINIMALNY = 15;
 
-    public static final int DOBA_POISTENIA_MINIMALNA = 15;
+    public static final int DOBA_POISTENIA_MINIMALNA = 1;
     public static final int DOBA_POISTENIA_MAXIMALNA = 75;
 
     public static final int MINIMALNY_PLAT = 380;
