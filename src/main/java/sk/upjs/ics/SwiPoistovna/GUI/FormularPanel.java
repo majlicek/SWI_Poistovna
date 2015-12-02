@@ -82,7 +82,7 @@ public class FormularPanel extends JScrollPane {
             };
 
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\pomoc.png"));
+                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//pomoc.png"));
                 rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
                 dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
@@ -216,7 +216,7 @@ public class FormularPanel extends JScrollPane {
             setBackground(Color.white);
 
             try {
-                BufferedImage imageDown = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\dole.png"));
+                BufferedImage imageDown = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//dole.png"));
                 tlacidlo = new JLabel(new ImageIcon(imageDown));
             } catch (Exception ex) {
                 System.out.println("nenacitane tlacidlo dole");

@@ -142,7 +142,7 @@ public class TlacidlaPanel extends JPanel {
         };
 
         try {
-            BufferedImage imageDomov = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\domov.png"));
+            BufferedImage imageDomov = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//domov.png"));
             domov = new JLabel(new ImageIcon(imageDomov));
         } catch (Exception ex) {
             System.out.println("nenacitane tlacidlo Domov");
@@ -150,7 +150,7 @@ public class TlacidlaPanel extends JPanel {
         }
 
         try {
-            BufferedImage imageInfo = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\info.png"));
+            BufferedImage imageInfo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//info.png"));
             info = new JLabel(new ImageIcon(imageInfo));
         } catch (Exception ex) {
             System.out.println("nenacitane tlacidlo Info");
@@ -158,7 +158,7 @@ public class TlacidlaPanel extends JPanel {
         }
 
         try {
-            BufferedImage imageZrus = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\zrus.png"));
+            BufferedImage imageZrus = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//zrus.png"));
             zrus = new JLabel(new ImageIcon(imageZrus));
         } catch (Exception ex) {
             System.out.println("nenacitane tlacidlo Zrus");
@@ -166,7 +166,7 @@ public class TlacidlaPanel extends JPanel {
         }
 
         try {
-            BufferedImage imageOk = ImageIO.read(new File("src\\main\\java\\sk\\upjs\\ics\\SwiPoistovna\\GUI\\obrazky\\ok.png"));
+            BufferedImage imageOk = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//ok.png"));
             ok = new JLabel(new ImageIcon(imageOk));
         } catch (Exception ex) {
             System.out.println("nenacitane tlacidlo Ok");
