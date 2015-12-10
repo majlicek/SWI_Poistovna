@@ -26,7 +26,7 @@ public class Insuright extends JFrame {
     private TlacidlaPanel tlacidlaPanel;
     private VyberPoisteniaPanel vyberPoisteniaPanel;
     private FormularPanel formularPanel;
-    private VypisPoisteniPanel vypisPoisteniPanel;
+    private VypisPoistovniPanel vypisPoisteniPanel;
 
     public Insuright() {
         setLayout(new MigLayout("", "[fill, grow]", "[][][fill, grow][]"));
@@ -55,12 +55,12 @@ public class Insuright extends JFrame {
         if (stav == Stav.VYPIS_POISTENI) {
             remove(vypisPoisteniPanel);
         }
+        remove(vyberPoisteniaPanel);
         vyberPoisteniaPanel = GuiFactory.INSTANCE.getVyberPoisteniaPanel();
         add(vyberPoisteniaPanel, "cell 0 2");
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        vyberPoisteniaPanel.reset();
         tlacidlaPanel.FunkcneTlacidla(false, false, false);
         stav = Stav.VYBER_POISTENIA;
         Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.ZIADNE);

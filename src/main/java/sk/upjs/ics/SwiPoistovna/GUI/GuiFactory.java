@@ -1,10 +1,18 @@
 package sk.upjs.ics.SwiPoistovna.GUI;
 
 import java.awt.Cursor;
+import java.awt.Desktop;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sk.upjs.ics.SwiPoistovna.Manager;
+import sk.upjs.ics.SwiPoistovna.Poistenie;
 
 public enum GuiFactory {
 
     INSTANCE;
+
+    public static final String ODKAZ_NA_STRANKU = "http://s.ics.upjs.sk/~swi_poistovna/";
 
     private static int KLASICKY_KURZOR = 0;
     private static int RUKA_KURZOR = 12;
@@ -14,7 +22,7 @@ public enum GuiFactory {
     private TlacidlaPanel tlacidlaPanel;
     private VyberPoisteniaPanel vyberPoisteniaPanel;
     private FormularPanel formularPanel;
-    private VypisPoisteniPanel vypisPoisteniPanel;
+    private VypisPoistovniPanel vypisPoisteniPanel;
 
     public Insuright getInsuright() {
         if (insuright == null) {
@@ -51,9 +59,9 @@ public enum GuiFactory {
         return formularPanel;
     }
 
-    public VypisPoisteniPanel getVypisPoisteniPanel() {
+    public VypisPoistovniPanel getVypisPoisteniPanel() {
         if (vypisPoisteniPanel == null) {
-            vypisPoisteniPanel = new VypisPoisteniPanel();
+            vypisPoisteniPanel = new VypisPoistovniPanel();
         }
         return vypisPoisteniPanel;
     }
@@ -67,13 +75,21 @@ public enum GuiFactory {
     }
 
     public void tlacidloDomov() {
+        vyberPoisteniaPanel = new VyberPoisteniaPanel();
         formularPanel = new FormularPanel();
-        vypisPoisteniPanel = new VypisPoisteniPanel();
+        vypisPoisteniPanel = new VypisPoistovniPanel();
         insuright.zmenNaVyber();
     }
 
     public void tlacidloInfo() {
-        System.out.println("POMOZ SI SAM! hahahaha...");
+        //System.out.println("POMOZ SI SAM! hahahaha...");
+
+        try {
+            Desktop.getDesktop().browse(new URL(ODKAZ_NA_STRANKU).toURI());
+        } catch (Exception ex) {
+            //Logger.getLogger(GuiFactory.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("nepodarilo sa otvorit stranku");
+        }
     }
 
     public void tlacidloZrus() {
@@ -83,8 +99,14 @@ public enum GuiFactory {
     public void tlacidloOk() {
         if (formularPanel.potvrd()) {
 
-            System.out.println("treba nahadzat data do vypisu");
-
+            System.out.println("test pred tahanim z databazy");
+            
+            Poistenie poistenie = new Poistenie(100);
+            Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
+            vypisPoisteniPanel = new VypisPoistovniPanel();
+            
+            System.out.println("test po tahani z databazy");
+            
             insuright.zmenNaVypis();
         }
     }
