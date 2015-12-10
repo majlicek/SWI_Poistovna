@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import net.miginfocom.swing.MigLayout;
 import sk.upjs.ics.SwiPoistovna.Manager;
@@ -15,20 +16,25 @@ public class VyberPoisteniaPanel extends JScrollPane {
     String lorem = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. ";
 
     private class SmrtSFixnouSumouMoznost extends JPanel {
-        
-        private String nadpisText = "POISTENIE S FIXNOU SUMOU";
-        private String obsahText = lorem;
 
+        private String nadpisText = "POISTENIE S FIXNOU SUMOU";
+        private String obsahText = "Suma bude vyplatená v prípade smrti počas trvania poistnej zmluvy.";
+
+        
         public SmrtSFixnouSumouMoznost() {
             setLayout(new MigLayout("", "[fill, grow]"));
             setBackground(Color.white);
             setBorder(new BevelBorder(2));
 
             JLabel nadpis = new JLabel(nadpisText);
-            JLabel obsah = new JLabel("<html><body style='width: " + 500 + "px'>" + obsahText + "</body></lorem>");
-
+            JTextArea obsah = new JTextArea(obsahText);
+            obsah.setWrapStyleWord(true);
+            obsah.setLineWrap(true);
+            obsah.setEditable(false);
+            obsah.setFocusable(false);
+                        
             add(nadpis, "cell 0 0");
-            add(obsah, "cell  0 1 ");
+            add(obsah, "cell  0 1");
         }
 
         public void in() {
@@ -43,7 +49,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
     private class SmrtSKlesajucouSumouMoznost extends JPanel {
 
         private String nadpisText = "POISTENIE S KLESAJUCOU SUMOU";
-        private String obsahText = lorem;
+        private String obsahText = "Suma bude rovnomerne klesať počas celej doby poistenia, ale výška mesačného poistného sa nemení. Klesajúca suma je vhodná, ak máte hypotéku a chcete, aby poistka kryla len zostatok hypotéky a iných úverov.";
 
         public SmrtSKlesajucouSumouMoznost() {
             setLayout(new MigLayout("", "[fill, grow]"));
@@ -51,7 +57,11 @@ public class VyberPoisteniaPanel extends JScrollPane {
             setBorder(new BevelBorder(2));
 
             JLabel nadpis = new JLabel(nadpisText);
-            JLabel obsah = new JLabel("<html><body style='width: " + 500 + "px'>" + obsahText + "</body></lorem>");
+            JTextArea obsah = new JTextArea(obsahText);
+            obsah.setWrapStyleWord(true);
+            obsah.setLineWrap(true);
+            obsah.setEditable(false);
+            obsah.setFocusable(false);
 
             add(nadpis, "cell 0 0");
             add(obsah, "cell  0 1 ");
@@ -64,11 +74,6 @@ public class VyberPoisteniaPanel extends JScrollPane {
         public void out() {
             setBorder(new BevelBorder(2));
         }
-    }
-    
-    public void reset(){
-        fixnaSumaMoznost.out();
-        klesajucaSumaMoznost.out();
     }
 
     private JPanel panel = new JPanel();
@@ -159,5 +164,5 @@ public class VyberPoisteniaPanel extends JScrollPane {
         setBorder(null);
         getVerticalScrollBar().setUnitIncrement(4);
     }
-    
+
 }
