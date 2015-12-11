@@ -36,7 +36,7 @@ public class VypisPoistovniPanel extends JScrollPane {
             }
 
             JTextArea textMesacna = new JTextArea("mesačná suma:");
-            JTextArea textStvrtrocna = new JTextArea("štvrtročná suma:");
+            JTextArea textStvrtrocna = new JTextArea("štvrťročná suma:");
             JTextArea textPolrocna = new JTextArea("polročná suma:");
             JTextArea textRocna = new JTextArea("ročná suma:");
 
