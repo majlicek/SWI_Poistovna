@@ -29,6 +29,7 @@ public enum Manager {
     private int rizikovaSkupinaCislom;
     private PracovnyPomer pracovnyPomer;
     private int mesacnyPrijem;
+    private int poistnaSuma;
     /*
      * [0smrtUrazom, 1trvaleNasledky, 2trvaleNasledkyProg, 3nevyhnutnaLiecba, 
      *   4praceneschopnost, 5hospitalizacia, 6kritickeChoroby]
@@ -107,6 +108,14 @@ public enum Manager {
 
     public void setMesacnyPrijem(int mesacnyPrijem) {
         this.mesacnyPrijem = mesacnyPrijem;
+    }
+
+    public int getPoistnaSuma() {
+        return poistnaSuma;
+    }
+
+    public void setPoistnaSuma(int suma) {
+        this.poistnaSuma = suma;
     }
 
     public boolean[] getPripoistenia() {

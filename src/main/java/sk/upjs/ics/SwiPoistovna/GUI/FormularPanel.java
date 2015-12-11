@@ -37,14 +37,16 @@ public class FormularPanel extends JScrollPane {
 
         private JLabel rokNarodeniaLabel = new JLabel("Rok narodenia:");
         private JLabel dobaPoisteniaLabel = new JLabel("Doba poistenia:");
-        private JLabel vyberRizikoLabel = new JLabel("Rizikova skupina:");
-        private JLabel vyberPracaLabel = new JLabel("Pracovny pomer:");
+        private JLabel vyberRizikoLabel = new JLabel("Riziková skupina:");
+        private JLabel vyberPracaLabel = new JLabel("Pracovný pomer:");
+        private JLabel poistnaSumaLabel = new JLabel("Poistná suma:");
         private JLabel rokNarodeniaPomoc = new JLabel("?");
         private JLabel dobaPoisteniaPomoc = new JLabel("?");
 
-        private JTextField rokNarodeniaText = new JTextField("");
-        private JTextField dobaPoisteniaText = new JTextField("");
-        private JTextField mesacnyPrijemText = new JTextField("");
+        private JTextField rokNarodeniaText = new JTextField("1993");
+        private JTextField dobaPoisteniaText = new JTextField("20");
+        private JTextField mesacnyPrijemText = new JTextField("1000");
+        private JTextField poistnaSumaText = new JTextField("30000");
 
         private ButtonGroup skupinaRiziko = new ButtonGroup();
         private ButtonGroup skupinaPraca = new ButtonGroup();
@@ -53,13 +55,13 @@ public class FormularPanel extends JScrollPane {
         private JRadioButton rizikoRadio2 = new JRadioButton("2");
         private JRadioButton rizikoRadio3 = new JRadioButton("3");
 
-        private JRadioButton zamestnanyRadio = new JRadioButton("zamestnany");
-        private JRadioButton nezamestnanyRadio = new JRadioButton("nezamestnany");
+        private JRadioButton zamestnanyRadio = new JRadioButton("zamestnaný");
+        private JRadioButton nezamestnanyRadio = new JRadioButton("nezamestnaný");
         private JRadioButton szcoRadio = new JRadioButton("SZCO");
 
         public ZakladneUdaje() {
-            // [fill, grow][labely][fill, grow][textFieldy][fill, grow]
-            setLayout(new MigLayout("", "[fill, grow][][fill, grow][][fill, grow]"));
+            // [fill, grow][labely][fill, grow][textFieldy][pomocnikovia][fill, grow]
+            setLayout(new MigLayout("", "[fill, grow][][fill, grow][][][fill, grow]"));
             setBackground(Color.white);
 
             ActionListener pracovnyPomerListener = new ActionListener() {
@@ -96,6 +98,7 @@ public class FormularPanel extends JScrollPane {
             rokNarodeniaText.setMinimumSize(new Dimension(200, 23));
             dobaPoisteniaText.setMinimumSize(new Dimension(200, 23));
             mesacnyPrijemText.setMinimumSize(new Dimension(100, 23));
+            poistnaSumaText.setMinimumSize(new Dimension(200, 23));
 
             skupinaRiziko.add(rizikoRadio1);
             skupinaRiziko.add(rizikoRadio2);
@@ -121,11 +124,11 @@ public class FormularPanel extends JScrollPane {
 
             add(rokNarodeniaLabel, "cell 1 0");
             add(rokNarodeniaText, "cell 3 0");
-            add(rokNarodeniaPomoc, "cell 3 0");
+            add(rokNarodeniaPomoc, "cell 4 0");
 
             add(dobaPoisteniaLabel, "cell 1 1");
             add(dobaPoisteniaText, "cell 3 1");
-            add(dobaPoisteniaPomoc, "cell 3 1");
+            add(dobaPoisteniaPomoc, "cell 4 1");
 
             add(vyberRizikoLabel, "cell 1 2");
             add(rizikoRadio1, "cell 3 2");
@@ -137,12 +140,16 @@ public class FormularPanel extends JScrollPane {
             add(mesacnyPrijemText, "cell 3 5");
             add(nezamestnanyRadio, "cell 3 6");
             add(szcoRadio, "cell 3 7");
+
+            add(poistnaSumaLabel, "cell 1 8");
+            add(poistnaSumaText, "cell 3 8");
         }
 
         public void zablokuj() {
             rokNarodeniaText.setEnabled(false);
             dobaPoisteniaText.setEnabled(false);
             mesacnyPrijemText.setEnabled(false);
+            poistnaSumaText.setEnabled(false);
             rizikoRadio1.setEnabled(false);
             rizikoRadio2.setEnabled(false);
             rizikoRadio3.setEnabled(false);
@@ -169,10 +176,16 @@ public class FormularPanel extends JScrollPane {
                 System.out.println("plat");
                 stav = false;
             }
+            if (!Verifier.skontrolujPoistnuSumu(poistnaSumaText.getText())) {
+                // vypis chybu
+                System.out.println("suma");
+                stav = false;
+            }
 
             if (stav) {
                 Manager.INSTANCE.setRokNarodenia(Integer.valueOf(rokNarodeniaText.getText()));
                 Manager.INSTANCE.setDobaPoistenia(Integer.valueOf(dobaPoisteniaText.getText()));
+                Manager.INSTANCE.setPoistnaSuma(Integer.valueOf(poistnaSumaText.getText()));
 
                 if (rizikoRadio1.isSelected()) {
                     Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
@@ -195,7 +208,6 @@ public class FormularPanel extends JScrollPane {
                     Manager.INSTANCE.setPracovnyPomer(Manager.PracovnyPomer.SZCO);
                     Manager.INSTANCE.setMesacnyPrijem(Integer.valueOf(mesacnyPrijemText.getText()));
                 }
-
             }
 
             return stav;
@@ -208,7 +220,7 @@ public class FormularPanel extends JScrollPane {
         private JLabel tlacidlo = new JLabel();
         private JLabel oznam = new JLabel("Vyberte si pripoistenie");
 
-        private JLabel error = new JLabel("Nespravne vyplnene udaje!");
+        private JLabel error = new JLabel("Nesprávne vyplnené udaje!");
 
         public VyberPripoisteniaAktivator() {
             // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
@@ -278,13 +290,13 @@ public class FormularPanel extends JScrollPane {
 
         private JCheckBox[] polePripoistenia = new JCheckBox[7];
 
-        private JCheckBox smrtUrazomBtn = new JCheckBox("smrt sposobena urazom");
-        private JCheckBox trvaleNasledkyBtn = new JCheckBox("trvale nasledky urazu");
-        private JCheckBox trvaleNasledkyProgBtn = new JCheckBox("trvale nasledky urazu s progresivnym plnenim");
-        private JCheckBox nevyhnutnaLiecbaBtn = new JCheckBox("denne odskodne za nevyhnutnu liecbu urazu");
-        private JCheckBox praceneschopnostBtn = new JCheckBox("denna davka v pripade praceneschopnosti ");
-        private JCheckBox hospitalizaciaBtn = new JCheckBox("denna davka v pripade hospitalizacie");
-        private JCheckBox kritickeChorobyBtn = new JCheckBox("kriticke choroby");
+        private JCheckBox smrtUrazomBtn = new JCheckBox("smrť spôsobená úrazom");
+        private JCheckBox trvaleNasledkyBtn = new JCheckBox("trvalé následky úrazu");
+        private JCheckBox trvaleNasledkyProgBtn = new JCheckBox("trvalé následky úrazu s progresívnym plnením");
+        private JCheckBox nevyhnutnaLiecbaBtn = new JCheckBox("denné odškodné za nevyhnutnú liečbu úrazu");
+        private JCheckBox praceneschopnostBtn = new JCheckBox("denná dávka v prípade práceneschopnosti ");
+        private JCheckBox hospitalizaciaBtn = new JCheckBox("denná dávka v prípade hospitalizácie");
+        private JCheckBox kritickeChorobyBtn = new JCheckBox("kritické choroby");
 
         public VyberPripoistenia() {
             // [fill, grow][checkboxy][fill, grow]

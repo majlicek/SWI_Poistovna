@@ -198,11 +198,16 @@ public class TlacidlaPanel extends JPanel {
         GuiFactory.INSTANCE.tlacidloOk();
     }
 
-    public void FunkcneTlacidla(boolean stavDomov, boolean stavZrus, boolean stavOk) {
+    public void FunkcneTlacidla(boolean stavDomov, boolean stavInfo, boolean stavZrus, boolean stavOk) {
         if (stavDomov) {
             domov.addMouseListener(domovListener);
         } else {
             domov.removeMouseListener(domovListener);
+        }
+        if (stavInfo) {
+            info.addMouseListener(infoListener);
+        } else {
+            info.removeMouseListener(infoListener);
         }
         if (stavZrus) {
             zrus.addMouseListener(zrusListener);

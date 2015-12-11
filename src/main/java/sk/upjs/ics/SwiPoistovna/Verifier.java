@@ -343,6 +343,10 @@ public class Verifier {
         return true;
     }
 
+    public static boolean skontrolujPoistnuSumu(String suma) {
+        return true;
+    }
+
     /**
      *
      * Skontroluje, ci je mozne pridat pripoistenie pre smrt urazom podla udajov

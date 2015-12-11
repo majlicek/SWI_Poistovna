@@ -48,7 +48,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
 
     private class SmrtSKlesajucouSumouMoznost extends JPanel {
 
-        private String nadpisText = "POISTENIE S KLESAJUCOU SUMOU";
+        private String nadpisText = "POISTENIE S KLESAJÚCOU SUMOU";
         private String obsahText = "Suma bude rovnomerne klesať počas celej doby poistenia, ale výška mesačného poistného sa nemení. Klesajúca suma je vhodná, ak máte hypotéku a chcete, aby poistka kryla len zostatok hypotéky a iných úverov.";
 
         public SmrtSKlesajucouSumouMoznost() {

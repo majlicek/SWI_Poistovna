@@ -61,7 +61,7 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(false, false, false);
+        tlacidlaPanel.FunkcneTlacidla(false, true, false, false);
         stav = Stav.VYBER_POISTENIA;
         Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.ZIADNE);
     }
@@ -78,7 +78,7 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(true, true, true);
+        tlacidlaPanel.FunkcneTlacidla(true, true, true, true);
         stav = Stav.FORMULAR;
     }
 
@@ -94,7 +94,7 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(true, false, false);
+        tlacidlaPanel.FunkcneTlacidla(false, false, false, false);
         stav = Stav.VYPIS_POISTENI;
     }
 

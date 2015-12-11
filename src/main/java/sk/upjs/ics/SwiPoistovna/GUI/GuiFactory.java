@@ -22,7 +22,7 @@ public enum GuiFactory {
     private TlacidlaPanel tlacidlaPanel;
     private VyberPoisteniaPanel vyberPoisteniaPanel;
     private FormularPanel formularPanel;
-    private VypisPoistovniPanel vypisPoisteniPanel;
+    private VypisPoistovniPanel vypisPoistovniPanel;
 
     public Insuright getInsuright() {
         if (insuright == null) {
@@ -60,10 +60,10 @@ public enum GuiFactory {
     }
 
     public VypisPoistovniPanel getVypisPoisteniPanel() {
-        if (vypisPoisteniPanel == null) {
-            vypisPoisteniPanel = new VypisPoistovniPanel();
+        if (vypisPoistovniPanel == null) {
+            vypisPoistovniPanel = new VypisPoistovniPanel();
         }
-        return vypisPoisteniPanel;
+        return vypisPoistovniPanel;
     }
 
     public void zmenKurzor(boolean stav) {
@@ -77,7 +77,7 @@ public enum GuiFactory {
     public void tlacidloDomov() {
         vyberPoisteniaPanel = new VyberPoisteniaPanel();
         formularPanel = new FormularPanel();
-        vypisPoisteniPanel = new VypisPoistovniPanel();
+        vypisPoistovniPanel = new VypisPoistovniPanel();
         insuright.zmenNaVyber();
     }
 
@@ -99,15 +99,26 @@ public enum GuiFactory {
     public void tlacidloOk() {
         if (formularPanel.potvrd()) {
 
-            System.out.println("test pred tahanim z databazy");
-            
-            Poistenie poistenie = new Poistenie(100);
-            Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
-            vypisPoisteniPanel = new VypisPoistovniPanel();
-            
-            System.out.println("test po tahani z databazy");
-            
+            vypisPoistovniPanel = new VypisPoistovniPanel();
             insuright.zmenNaVypis();
+
+            boolean temp = false;
+            temp = true;
+            if (temp) {
+                System.out.println("test pred tahanim z databazy");
+                Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
+                Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
+                System.out.println("test po tahani z databazy");
+            } else {
+                // wait
+                int temp2 = Integer.MIN_VALUE;
+                for (int i = 0; i < Integer.MAX_VALUE; i++) {
+                    temp2++;
+                }
+                System.out.println(temp2);
+            }
+
+            vypisPoistovniPanel.vypisVysledok();
         }
     }
 
