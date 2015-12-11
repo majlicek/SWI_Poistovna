@@ -220,7 +220,7 @@ public class FormularPanel extends JScrollPane {
         private JLabel tlacidlo = new JLabel();
         private JLabel oznam = new JLabel("Vyberte si pripoistenie");
 
-        private JLabel error = new JLabel("Nesprávne vyplnené udaje!");
+        private JLabel error = new JLabel("Nesprávne vyplnené údaje!");
 
         public VyberPripoisteniaAktivator() {
             // [tlacidlo][fill, grow][label][fill, grow][error][fill, grow]
