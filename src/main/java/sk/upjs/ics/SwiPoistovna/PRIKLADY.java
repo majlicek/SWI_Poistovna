@@ -35,7 +35,6 @@ public class PRIKLADY {
         }
         
         
-        
         /*System.out.println(Verifier.pridatNevyhnutnaLiecba("1969"));
          Manager.INSTANCE.setDobaPoistenia(55);
          Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);

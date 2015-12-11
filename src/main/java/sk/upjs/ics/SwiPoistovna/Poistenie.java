@@ -2,7 +2,6 @@ package sk.upjs.ics.SwiPoistovna;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ public class Poistenie {
     private String nazov;
     private int dlzkaPoistenia;
     private int zadanaSuma;
+    private static final RoundingMode roundingMode = RoundingMode.HALF_UP;
     private InsurightDAO insurightDAO = DaoFactory.INSTANCE.getInsurightDAO();
 
     /**
@@ -45,7 +45,7 @@ public class Poistenie {
 
         iteraciaCezVsetkyPoistovne:
         for (Poistovna poistovna : vsetkyPoistovne) {
-            BigDecimal suma = new BigDecimal(BigInteger.ZERO);
+            BigDecimal docasnaSumaTotal = new BigDecimal(BigInteger.ZERO);
             double koef = 0;
             iteracaCezPripoistenia:
             for (int i = 0; i < Manager.INSTANCE.getPripoistenia().length; i++) {
@@ -57,21 +57,27 @@ public class Poistenie {
                 }
 
                 try {
+                    BigDecimal sumaNovehoPripoistenia;
+                    
                     if (Manager.INSTANCE.getPripoistenia(i) && i == 0) {
                         koef = insurightDAO.getKoeficientSmrt(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
-                        suma = new BigDecimal((this.zadanaSuma / 1000) * koef).add(suma, MathContext.DECIMAL32);
+                        sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
+                        docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
                     }
                     if (Manager.INSTANCE.getPripoistenia(i) && i == 6) {
                         koef = insurightDAO.getKoeficientKritickeChoroby(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
-                        suma = new BigDecimal((this.zadanaSuma / 1000) * koef).add(suma, MathContext.DECIMAL32);
+                        sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
+                        docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
                     }
                     if (Manager.INSTANCE.getPripoistenia(i) && i == 5) {
                         koef = insurightDAO.getKoeficientHospitalizacia(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
-                        suma = new BigDecimal((this.zadanaSuma / 1000) * koef).add(suma, MathContext.DECIMAL32);
+                        sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
+                        docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
                     }
                     if (Manager.INSTANCE.getPripoistenia(i) && i == 3) {
                         koef = insurightDAO.getKoeficientDenneOdskodnenie29dni(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
-                        suma = new BigDecimal((this.zadanaSuma / 1000) * koef).add(suma, MathContext.DECIMAL32);
+                        sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
+                        docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
                     }
 
                 } catch (RuntimeException e) {
@@ -81,19 +87,21 @@ public class Poistenie {
                 }
 
             }
+            docasnaSumaTotal = docasnaSumaTotal.setScale(2, roundingMode);
+            
             for (Poistovna poistovna2 : vyhovujucePoistovne) {
                 if (poistovna.equals(poistovna2)) {
                     if (Manager.INSTANCE.getTypPoistenia() == Manager.TypPoistenia.FIXNA_SUMA) {
-                        poistovna2.setCenaMesacna(suma);
-                        poistovna2.setCenaRocna(suma.multiply(new BigDecimal(12)));
-                        poistovna2.setCenaPolRocna(suma.multiply(new BigDecimal(6)));
-                        poistovna2.setCenaStvrtRocna(suma.multiply(new BigDecimal(3)));
+                        poistovna2.setCenaMesacna(docasnaSumaTotal);
+                        poistovna2.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(12)).setScale(2, roundingMode));
+                        poistovna2.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(6)).setScale(2, roundingMode));
+                        poistovna2.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(3)).setScale(2, roundingMode));
                     }
 
                     if (Manager.INSTANCE.getTypPoistenia() == Manager.TypPoistenia.KLESAJUCA_SUMA) {
                         BigDecimal zatialNeprevedenaRocnaSuma = new BigDecimal(BigInteger.ONE);
 
-                        zatialNeprevedenaRocnaSuma = zatialNeprevedenaRocnaSuma.multiply(suma);
+                        zatialNeprevedenaRocnaSuma = zatialNeprevedenaRocnaSuma.multiply(docasnaSumaTotal);
                         zatialNeprevedenaRocnaSuma = zatialNeprevedenaRocnaSuma.multiply(new BigDecimal(12));
 
                         BigDecimal odcitanec = new BigDecimal(BigInteger.ONE);
@@ -103,12 +111,12 @@ public class Poistenie {
                         for (int m = 0; m < Manager.INSTANCE.getDobaPoistenia(); m++) {
                             vyslednaSuma = vyslednaSuma.add(zatialNeprevedenaRocnaSuma.subtract(odcitanec.multiply(new BigDecimal(m))));
                         }
-                        vyslednaSuma = vyslednaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia()));
+                        vyslednaSuma = vyslednaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia())).setScale(2, roundingMode);
 
-                        poistovna2.setCenaMesacna(vyslednaSuma.divide(new BigDecimal(12),6,BigDecimal.ROUND_UP));
+                        poistovna2.setCenaMesacna(vyslednaSuma.divide(new BigDecimal(12),roundingMode).setScale(2, roundingMode));
                         poistovna2.setCenaRocna(vyslednaSuma);
-                        poistovna2.setCenaPolRocna(vyslednaSuma.divide(new BigDecimal(2),6,BigDecimal.ROUND_UP));
-                        poistovna2.setCenaStvrtRocna(vyslednaSuma.divide(new BigDecimal(4),6,BigDecimal.ROUND_UP));
+                        poistovna2.setCenaPolRocna(vyslednaSuma.divide(new BigDecimal(2),roundingMode).setScale(2, roundingMode));
+                        poistovna2.setCenaStvrtRocna(vyslednaSuma.divide(new BigDecimal(4),roundingMode).setScale(2, roundingMode));
                     }
 
                     break;

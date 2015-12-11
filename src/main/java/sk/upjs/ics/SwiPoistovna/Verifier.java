@@ -13,6 +13,9 @@ public class Verifier {
 
     public static final int DOBA_POISTENIA_MINIMALNA = 1;
     public static final int DOBA_POISTENIA_MAXIMALNA = 75;
+    
+    public static final int ZADANA_SUMA_MINIMALNA = 100;
+    public static final int ZADANA_SUMA_MAXIMALNA = 200000;
 
     public static final int MINIMALNY_PLAT = 380;
 
@@ -342,6 +345,40 @@ public class Verifier {
 
         return true;
     }
+    
+    /**
+     *
+     * Skontroluje, ci zadana suma splna pozadovane minimum a neprekracuje limit.
+     *
+     *
+     * @param zadanaSuma {@code String} suma, ktoru zadal uzivatel
+     *
+     * @return {@code true} , ak je cele cislo a zaroven ak splna minimum a 
+     * neprekracuje maximalny povoleny prah, inac vrati {@code false}.
+     * 
+     */
+    public static boolean skontrolujZadanuSumu(String zadanaSuma) {
+        // skontrolovat
+
+        if (zadanaSuma.equals("") || Verifier.inputContainsNumbersOnly(zadanaSuma) == false) {
+            return false;
+        }
+
+        int zadanaSumaSprasovana = -1;
+        try {
+            zadanaSumaSprasovana = Integer.parseInt(zadanaSuma);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        if (Verifier.numberIsBetween(zadanaSumaSprasovana, ZADANA_SUMA_MINIMALNA, ZADANA_SUMA_MAXIMALNA)) {
+            return true;
+        }
+
+        return false;
+    }
+    
+    
 
     public static boolean skontrolujPoistnuSumu(String suma) {
         return true;
