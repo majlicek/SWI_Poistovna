@@ -45,7 +45,7 @@ public class VypisPoistovniPanel extends JScrollPane {
             JTextArea cenaRocna;
 
             boolean temp = false;
-            //temp = true;
+            temp = true;
             if (temp) {
                 nazov = new JLabel(poistovna.getNazov());
 
@@ -161,7 +161,7 @@ public class VypisPoistovniPanel extends JScrollPane {
         panel.remove(nacitavanie);
 
         boolean temp = false;
-        //temp = true;
+        temp = true;
         if (temp) {
             poistovne = Manager.INSTANCE.getPoistovne();
         } else {

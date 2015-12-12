@@ -103,7 +103,7 @@ public enum GuiFactory {
             insuright.zmenNaVypis();
 
             boolean temp = false;
-            //temp = true;
+            temp = true;
             if (temp) {
                 Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
                 Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
