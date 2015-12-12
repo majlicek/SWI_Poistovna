@@ -17,6 +17,8 @@ public interface InsurightDAO {
     
     public double getKoeficientSmrt(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException;
     
+    public double getKoeficientTrvaleNasledky(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException;
+    
     public double getKoeficientKritickeChoroby(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException;
     
     public double getKoeficientHospitalizacia(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException;

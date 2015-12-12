@@ -56,6 +56,15 @@ public class DBInsurightDAO implements InsurightDAO {
         }
         return koeficienty.get(0);
     }
+    
+    @Override
+    public double getKoeficientTrvaleNasledky(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException {
+        List<Double> koeficienty = jdbcTemplate.queryForList("SELECT Koeficient FROM TrvaleNasledky WHERE Poistovna=" + idPoistovna + " AND VEK=" + vek + " AND PoistnaDoba=" + poistnaDoba + " AND RizikovaSkupina=" + rizikovaSkupina, Double.class);
+        if (koeficienty.size() == 0) {
+            throw new RuntimeException("Neexistuje v tabulke TrvaleNasledky koeficient pre poistovnu s id " + idPoistovna + ", vekom " + vek + ", poistnou dobou " + poistnaDoba + ", rizikovou skupinou " + rizikovaSkupina + ".");
+        }
+        return koeficienty.get(0);
+    }
 
     @Override
     public double getKoeficientKritickeChoroby(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException {

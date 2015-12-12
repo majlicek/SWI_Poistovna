@@ -61,8 +61,8 @@ public class Poistenie {
             double koef = 0;
             iteracaCezPripoistenia:
             for (int i = 0; i < Manager.INSTANCE.getPripoistenia().length; i++) {
-                if (i == 1 || i == 2 || i == 4) {
-                    // tabulky pre [1, 2, 4]trvaleNasledky, trvaleNasledkyProg, praceneschopnost este 
+                if (i == 2 || i == 4) {
+                    // tabulky pre [2, 4]trvaleNasledkyProg, praceneschopnost este 
                     // nemame, preto aby sme mali aspon 1 poistovnu v koncovom vypocte,
                     // tak tieto pripoistenia neberieme do uvahy
                     continue;
@@ -88,6 +88,11 @@ public class Poistenie {
                     }
                     if (Manager.INSTANCE.getPripoistenia(i) && i == 3) {
                         koef = insurightDAO.getKoeficientDenneOdskodnenie29dni(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
+                        sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
+                        docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
+                    }
+                    if (Manager.INSTANCE.getPripoistenia(i) && i == 1) {
+                        koef = insurightDAO.getKoeficientTrvaleNasledky(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
                         sumaNovehoPripoistenia = new BigDecimal((this.zadanaSuma / 1000) * koef);
                         docasnaSumaTotal = docasnaSumaTotal.add(sumaNovehoPripoistenia);
                     }
