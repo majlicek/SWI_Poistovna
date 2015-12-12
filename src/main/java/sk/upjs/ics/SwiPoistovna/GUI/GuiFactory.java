@@ -103,22 +103,20 @@ public enum GuiFactory {
             insuright.zmenNaVypis();
 
             boolean temp = false;
-            temp = true;
+            //temp = true;
             if (temp) {
-                System.out.println("test pred tahanim z databazy");
                 Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
                 Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
-                System.out.println("test po tahani z databazy");
             } else {
                 // wait
                 int temp2 = Integer.MIN_VALUE;
-                for (int i = 0; i < Integer.MAX_VALUE; i++) {
+                for (int i = temp2; i < Integer.MAX_VALUE; i++) {
                     temp2++;
                 }
-                System.out.println(temp2);
             }
 
             vypisPoistovniPanel.vypisVysledok();
+
         }
     }
 

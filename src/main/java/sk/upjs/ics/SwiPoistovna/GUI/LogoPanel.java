@@ -23,7 +23,6 @@ public class LogoPanel extends JPanel {
             logo = new JLabel(new ImageIcon(imageLogo));
 
         } catch (Exception ex) {
-            System.out.println("nenacitane logo");
             //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         add(logo);

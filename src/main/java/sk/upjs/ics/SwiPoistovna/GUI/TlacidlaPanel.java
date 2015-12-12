@@ -145,7 +145,6 @@ public class TlacidlaPanel extends JPanel {
             BufferedImage imageDomov = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//domov.png"));
             domov = new JLabel(new ImageIcon(imageDomov));
         } catch (Exception ex) {
-            System.out.println("nenacitane tlacidlo Domov");
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -153,7 +152,6 @@ public class TlacidlaPanel extends JPanel {
             BufferedImage imageInfo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//info.png"));
             info = new JLabel(new ImageIcon(imageInfo));
         } catch (Exception ex) {
-            System.out.println("nenacitane tlacidlo Info");
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -161,7 +159,6 @@ public class TlacidlaPanel extends JPanel {
             BufferedImage imageZrus = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//zrus.png"));
             zrus = new JLabel(new ImageIcon(imageZrus));
         } catch (Exception ex) {
-            System.out.println("nenacitane tlacidlo Zrus");
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -169,7 +166,6 @@ public class TlacidlaPanel extends JPanel {
             BufferedImage imageOk = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//ok.png"));
             ok = new JLabel(new ImageIcon(imageOk));
         } catch (Exception ex) {
-            System.out.println("nenacitane tlacidlo Ok");
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 

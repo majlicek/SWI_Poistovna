@@ -1,7 +1,6 @@
 package sk.upjs.ics.SwiPoistovna.GUI;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -28,10 +27,9 @@ public class VypisPoistovniPanel extends JScrollPane {
 
             JLabel logo = new JLabel();
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//poistovne//" + poistovna.getNazov() + ".png"));
+                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//poistovne//" + poistovna.getNazov().toLowerCase() + ".png"));
                 logo = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
-                System.out.println("nenacitane logo");
                 //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -47,7 +45,7 @@ public class VypisPoistovniPanel extends JScrollPane {
             JTextArea cenaRocna;
 
             boolean temp = false;
-            temp = true;
+            //temp = true;
             if (temp) {
                 nazov = new JLabel(poistovna.getNazov());
 
@@ -63,6 +61,24 @@ public class VypisPoistovniPanel extends JScrollPane {
                 cenaPolrocna = new JTextArea("6544354" + " €");
                 cenaRocna = new JTextArea("6544354" + " €");
             }
+
+            cenaMesacna.setFocusable(false);
+            cenaMesacna.setEditable(false);
+            cenaStvrtrocna.setFocusable(false);
+            cenaStvrtrocna.setEditable(false);
+            cenaPolrocna.setFocusable(false);
+            cenaPolrocna.setEditable(false);
+            cenaRocna.setFocusable(false);
+            cenaRocna.setEditable(false);
+
+            textMesacna.setFocusable(false);
+            textMesacna.setEditable(false);
+            textStvrtrocna.setFocusable(false);
+            textStvrtrocna.setEditable(false);
+            textPolrocna.setFocusable(false);
+            textPolrocna.setEditable(false);
+            textRocna.setFocusable(false);
+            textRocna.setEditable(false);
 
             add(logo, "cell 0 0 1 3");
             add(nazov, "cell 2 0");
@@ -93,16 +109,15 @@ public class VypisPoistovniPanel extends JScrollPane {
             setLayout(new MigLayout("", "[fill, grow][][fill, grow]", "[fill, grow][][fill, grow]"));
             setBackground(Color.white);
 
-            JLabel logo = new JLabel("ČAKAJTE PROSÍM...");
+            JLabel image = new JLabel("ČAKAJTE PROSÍM...");
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//nacitavanie.gif"));
-                logo = new JLabel(new ImageIcon(imageLogo));
+                ImageIcon imageIcon = new ImageIcon("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//nacitavanie.gif");
+                image = new JLabel(imageIcon);
             } catch (Exception ex) {
-                System.out.println("nenacitane nacitavanie");
                 //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            add(logo, "cell 1 1");
+            add(image, "cell 1 1");
         }
     }
 
@@ -124,7 +139,7 @@ public class VypisPoistovniPanel extends JScrollPane {
 
     private JPanel panel = new JPanel();
 
-    private Nacitavanie nacitavanie = new Nacitavanie();
+    private Nacitavanie nacitavanie;
 
     private ZiadnaPoistovna ziadnaPoistovna = new ZiadnaPoistovna();
 
@@ -134,6 +149,7 @@ public class VypisPoistovniPanel extends JScrollPane {
         panel.setLayout(new MigLayout("", "[fill, grow]"));
         panel.setBackground(Color.white);
 
+        nacitavanie = new Nacitavanie();
         panel.add(nacitavanie);
 
         setViewportView(panel);
@@ -145,7 +161,7 @@ public class VypisPoistovniPanel extends JScrollPane {
         panel.remove(nacitavanie);
 
         boolean temp = false;
-        temp = true;
+        //temp = true;
         if (temp) {
             poistovne = Manager.INSTANCE.getPoistovne();
         } else {

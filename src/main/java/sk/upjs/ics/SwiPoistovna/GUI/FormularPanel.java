@@ -88,7 +88,6 @@ public class FormularPanel extends JScrollPane {
                 rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
                 dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
-                System.out.println("nenacitane pomocne info ?");
                 //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -231,7 +230,6 @@ public class FormularPanel extends JScrollPane {
                 BufferedImage imageDown = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//dole.png"));
                 tlacidlo = new JLabel(new ImageIcon(imageDown));
             } catch (Exception ex) {
-                System.out.println("nenacitane tlacidlo dole");
                 //Logger.getLogger(FormularPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -307,10 +305,10 @@ public class FormularPanel extends JScrollPane {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if ("trvale nasledky urazu".equals(e.getActionCommand())) {
+                    if (trvaleNasledkyBtn.getText().equals(e.getActionCommand())) {
                         trvaleNasledkyProgBtn.setSelected(false);
                     }
-                    if ("trvale nasledky urazu s progresivnym plnenim".equals(e.getActionCommand())) {
+                    if (trvaleNasledkyProgBtn.getText().equals(e.getActionCommand())) {
                         trvaleNasledkyBtn.setSelected(false);
                     }
                 }
