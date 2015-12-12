@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import sk.upjs.ics.SwiPoistovna.DAO.DaoFactory;
 import sk.upjs.ics.SwiPoistovna.DAO.InsurightDAO;
@@ -32,11 +33,22 @@ public class Poistenie {
      * konkretne hodnoty.
      */
     public List<Poistovna> vypocitajCeny() {
-        //TODO
-
+ 
         if (Manager.INSTANCE.getTypPoistenia() != Manager.TypPoistenia.KLESAJUCA_SUMA && Manager.INSTANCE.getTypPoistenia() != Manager.TypPoistenia.FIXNA_SUMA || Manager.INSTANCE.getTypPoistenia() == Manager.TypPoistenia.ZIADNE) {
             System.err.println("Nie je zvoleny typ poistenia! Treba nastavit ci chceme fixnu alebo klesajucu sumu cez setTypPoistenia");
-            return new ArrayList<Poistovna>();
+            return Collections.EMPTY_LIST;
+        }
+        
+        for(int i=0;i<Manager.INSTANCE.getPripoistenia().length+1;i++){
+            if(i == Manager.INSTANCE.getPripoistenia().length){
+                System.err.println("Nie je zvolene ziadne pripoistenie! Pred uskutocnenim vypoctu treba v triede Verifier overit, ci je co pocitat metodou skontrolujPrazdnePripoistenie()!");
+                return Collections.EMPTY_LIST;
+            }
+            else{
+                if(Manager.INSTANCE.getPripoistenia(i)){
+                    break;
+                }
+            }
         }
 
         List<Poistovna> vsetkyPoistovne = insurightDAO.getPoistovne();
