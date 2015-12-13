@@ -47,12 +47,21 @@ public class DBInsurightDAO implements InsurightDAO {
         return nazvyPoistovne.get(0);
 
     }
-
+    
     @Override
     public double getKoeficientSmrt(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException {
         List<Double> koeficienty = jdbcTemplate.queryForList("SELECT Koeficient FROM Smrt WHERE Poistovna=" + idPoistovna + " AND VEK=" + vek + " AND PoistnaDoba=" + poistnaDoba + " AND RizikovaSkupina=" + rizikovaSkupina, Double.class);
         if (koeficienty.size() == 0) {
             throw new RuntimeException("Neexistuje v tabulke Smrt koeficient pre poistovnu s id " + idPoistovna + ", vekom " + vek + ", poistnou dobou " + poistnaDoba + ", rizikovou skupinou " + rizikovaSkupina + ".");
+        }
+        return koeficienty.get(0);
+    }
+
+    @Override
+    public double getKoeficientSmrtSposobenaUrazom(int idPoistovna, int vek, int poistnaDoba, int rizikovaSkupina) throws RuntimeException {
+        List<Double> koeficienty = jdbcTemplate.queryForList("SELECT Koeficient FROM SmrtUrazom WHERE Poistovna=" + idPoistovna + " AND VEK=" + vek + " AND PoistnaDoba=" + poistnaDoba + " AND RizikovaSkupina=" + rizikovaSkupina, Double.class);
+        if (koeficienty.size() == 0) {
+            throw new RuntimeException("Neexistuje v tabulke SmrtUrazom koeficient pre poistovnu s id " + idPoistovna + ", vekom " + vek + ", poistnou dobou " + poistnaDoba + ", rizikovou skupinou " + rizikovaSkupina + ".");
         }
         return koeficienty.get(0);
     }

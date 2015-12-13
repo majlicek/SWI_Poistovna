@@ -486,29 +486,6 @@ public class Verifier {
         return (Verifier.skontrolujVek(Manager.INSTANCE.getRokNarodenia(), VEKOVY_LIMIT_KRITICKE_CHOROBY));
     }
     
-    /**
-     *
-     * Skontroluje, ci si pouzivatel vybral aspon jedno pripoistenie, teda ci
-     * je co pocitat.
-     *
-     * @return {@code true} ak v Managerovi je zaskrtnute aspon jedno pripoistenie.
-     * Inak vrati {@code false}.
-     */
-    public static boolean skontrolujPrazdnePripoistenia() {
-        for(int i=0;i<Manager.INSTANCE.getPripoistenia().length+1;i++){
-            if(i == Manager.INSTANCE.getPripoistenia().length){
-                System.err.println("Nie je zvolene ziadne pripoistenie! Pred uskutocnenim vypoctu treba vybrat aspon jedno pripoistenie pre ktore sumy budeme pocitat!");
-                return false;
-            }
-            else{
-                if(Manager.INSTANCE.getPripoistenia(i)){
-                    return true;
-                }
-            }
-        }
-        return true;
-    }
-
 
     /*
      * [smrtUrazom, trvaleNasledky, trvaleNasledkyProg, nevyhnutnaLiecba, 
