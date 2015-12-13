@@ -44,7 +44,14 @@ public class Poistenie {
 
         iteraciaCezVsetkyPoistovne:
         for (Poistovna poistovna : vsetkyPoistovne) {
-            double koef = insurightDAO.getKoeficientSmrt(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
+            double koef = 0;
+            try {
+                koef = insurightDAO.getKoeficientSmrt(poistovna.getId(), Verifier.SUCASNY_ROK - Manager.INSTANCE.getRokNarodenia(), Manager.INSTANCE.getDobaPoistenia(), Manager.INSTANCE.getRizikovaSkupinaCislom());
+            } catch (RuntimeException e) {
+                System.out.println("Poistovna " + poistovna.getNazov() + " sa nebude brat k vypoctom do uvahy. Nesplna ZAKLADNE poistenie:" + e.getMessage());
+                vyhovujucePoistovne.remove(poistovna);
+                continue iteraciaCezVsetkyPoistovne;
+            }
             BigDecimal docasnaSumaTotal = new BigDecimal((this.zadanaSuma / 1000) * koef);
 
             if (Manager.INSTANCE.getTypPoistenia() == Manager.TypPoistenia.KLESAJUCA_SUMA) {
