@@ -80,7 +80,7 @@ public enum GuiFactory {
     }
 
     public void tlacidloDomov() {
-        if (worker != null || !worker.isDone()) {
+        if (worker != null && !worker.isDone()) {
             worker.cancel(true);
         }
         vyberPoisteniaPanel = new VyberPoisteniaPanel();

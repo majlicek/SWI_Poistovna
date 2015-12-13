@@ -360,7 +360,9 @@ public class FormularPanel extends JScrollPane {
         panel.remove(vyberPripoistenia);
         zakladneUdaje = new ZakladneUdaje();
         vyberPripoistenia = new VyberPripoistenia();
+        Manager.TypPoistenia pomocnyTyp = Manager.INSTANCE.getTypPoistenia();
         Manager.INSTANCE.reset();
+        Manager.INSTANCE.setTypPoistenia(pomocnyTyp);
         panel.add(zakladneUdaje, "cell 0 0");
         panel.updateUI();
         vyberPripoisteniaAktivator.ukazError(false);
