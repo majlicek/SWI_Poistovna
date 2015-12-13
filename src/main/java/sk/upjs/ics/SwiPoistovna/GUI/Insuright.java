@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import sk.upjs.ics.SwiPoistovna.Manager;
 
@@ -61,9 +62,9 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(false, true, false, false);
+        tlacidlaPanel.FunkcneTlacidla(false, false, false);
         stav = Stav.VYBER_POISTENIA;
-        Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.ZIADNE);
+        Manager.INSTANCE.reset();
     }
 
     public void zmenNaFormular() {
@@ -78,7 +79,7 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(true, true, true, true);
+        tlacidlaPanel.FunkcneTlacidla(true, true, true);
         stav = Stav.FORMULAR;
     }
 
@@ -94,14 +95,18 @@ public class Insuright extends JFrame {
         setPreferredSize(getSize());
         pack();
         update(getGraphics());
-        tlacidlaPanel.FunkcneTlacidla(false, false, false, false);
+        tlacidlaPanel.FunkcneTlacidla(true, false, false);
         stav = Stav.VYPIS_POISTENI;
     }
 
     public static void main(String[] args) {
-        Insuright poistenie = GuiFactory.INSTANCE.getInsuright();
-        poistenie.setVisible(true);
-        poistenie.setLocationRelativeTo(CENTER_SCREEN);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                Insuright poistenie = GuiFactory.INSTANCE.getInsuright();
+                poistenie.setVisible(true);
+                poistenie.setLocationRelativeTo(CENTER_SCREEN);
+            }
+        });
     }
 
 }

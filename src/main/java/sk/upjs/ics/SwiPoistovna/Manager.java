@@ -47,6 +47,7 @@ public enum Manager {
         mesacnyPrijem = 0;
         pripoistenia = new boolean[7];
         poistovne = new ArrayList<>();
+        poistenie = TypPoistenia.ZIADNE;
     }
 
     public TypPoistenia getTypPoistenia() {

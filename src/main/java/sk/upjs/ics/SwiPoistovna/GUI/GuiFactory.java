@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingWorker;
 import sk.upjs.ics.SwiPoistovna.Manager;
 import sk.upjs.ics.SwiPoistovna.Poistenie;
 
@@ -13,6 +14,8 @@ public enum GuiFactory {
     INSTANCE;
 
     public static final String ODKAZ_NA_STRANKU = "http://s.ics.upjs.sk/~swi_poistovna/";
+
+    boolean temp = true; // false = test; true = normal
 
     private static int KLASICKY_KURZOR = 0;
     private static int RUKA_KURZOR = 12;
@@ -23,6 +26,8 @@ public enum GuiFactory {
     private VyberPoisteniaPanel vyberPoisteniaPanel;
     private FormularPanel formularPanel;
     private VypisPoistovniPanel vypisPoistovniPanel;
+
+    private SwingWorker worker;
 
     public Insuright getInsuright() {
         if (insuright == null) {
@@ -75,6 +80,9 @@ public enum GuiFactory {
     }
 
     public void tlacidloDomov() {
+        if (worker != null || !worker.isDone()) {
+            worker.cancel(true);
+        }
         vyberPoisteniaPanel = new VyberPoisteniaPanel();
         formularPanel = new FormularPanel();
         vypisPoistovniPanel = new VypisPoistovniPanel();
@@ -102,21 +110,30 @@ public enum GuiFactory {
             vypisPoistovniPanel = new VypisPoistovniPanel();
             insuright.zmenNaVypis();
 
-            boolean temp = false;
-            temp = true;
-            if (temp) {
-                Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
-                Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
-            } else {
-                // wait
-                int temp2 = Integer.MIN_VALUE;
-                for (int i = temp2; i < Integer.MAX_VALUE; i++) {
-                    temp2++;
+            worker = new SwingWorker() {
+
+                @Override
+                protected Void doInBackground() throws Exception {
+
+                    if (temp) {
+                        Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
+                        Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
+                    } else {
+                        // wait
+                        int temp2 = Integer.MIN_VALUE;
+                        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+                            temp2++;
+                        }
+                    }
+                    
+                    return null;
                 }
-            }
 
-            vypisPoistovniPanel.vypisVysledok();
-
+                protected void done() {
+                    vypisPoistovniPanel.vypisVysledok();
+                }
+            };
+            worker.execute();
         }
     }
 

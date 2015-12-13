@@ -18,6 +18,8 @@ import sk.upjs.ics.SwiPoistovna.Poistovna;
 
 public class VypisPoistovniPanel extends JScrollPane {
 
+    boolean temp = true; // false = test; true = normal
+
     private class VypisPoistovne extends JPanel {
 
         public VypisPoistovne(Poistovna poistovna) {
@@ -44,8 +46,6 @@ public class VypisPoistovniPanel extends JScrollPane {
             JTextArea cenaPolrocna;
             JTextArea cenaRocna;
 
-            boolean temp = false;
-            temp = true;
             if (temp) {
                 nazov = new JLabel(poistovna.getNazov());
 
@@ -124,15 +124,17 @@ public class VypisPoistovniPanel extends JScrollPane {
     private class ZiadnaPoistovna extends JPanel {
 
         public ZiadnaPoistovna() {
-            // [fill, grow][text 1/3][text 2/3][text 3/3][fill, grow]
-            setLayout(new MigLayout("", "[fill, grow][fill, grow][fill, grow][fill, grow][fill, grow]", "[fill, grow][fill, grow]"));
+            // [fill, grow][text 1/2][text 2/2][fill, grow]
+            setLayout(new MigLayout("", "[fill, grow][][][fill, grow]", "[fill, grow][fill, grow]"));
             setBackground(Color.white);
 
             JLabel lutujeme = new JLabel("ĽUTUJEME");
             JTextArea text = new JTextArea("Vašim požiadavkám nevyhovuje žiadna poisťovňa.");
+            text.setFocusable(false);
+            text.setEditable(false);
 
-            add(lutujeme, "cell 1 0 3 1");
-            add(text, "cell 1 1 3 1");
+            add(lutujeme, "cell 1 0 2 1");
+            add(text, "cell 1 1 2 1");
         }
 
     }
@@ -160,8 +162,6 @@ public class VypisPoistovniPanel extends JScrollPane {
     public void vypisVysledok() {
         panel.remove(nacitavanie);
 
-        boolean temp = false;
-        temp = true;
         if (temp) {
             poistovne = Manager.INSTANCE.getPoistovne();
         } else {
@@ -186,9 +186,7 @@ public class VypisPoistovniPanel extends JScrollPane {
                 panel.add(vypisPoistovne, "wrap");
             }
         }
-
-        GuiFactory.INSTANCE.getTlacidlaPanel().FunkcneTlacidla(true, true, false, false);
-
+        panel.updateUI();
     }
 
 }
