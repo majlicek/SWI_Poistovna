@@ -24,9 +24,11 @@ public class PRIKLADY {
         Manager.INSTANCE.setMesacnyPrijem(1000);
         Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.KLESAJUCA_SUMA);
         Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
-        Manager.INSTANCE.setRokNarodenia(1990);
+        Manager.INSTANCE.setRokNarodenia(1945);
         Manager.INSTANCE.setPripoistenia(0, true);
         Manager.INSTANCE.setPripoistenia(6, true);
+        
+        System.out.println(Verifier.pridatPraceneschopnost());
         
         List<Poistovna> vyslednePoistovneKtoreBudemePorovnavat = p.vypocitajCeny();
         for(Poistovna poi: vyslednePoistovneKtoreBudemePorovnavat){

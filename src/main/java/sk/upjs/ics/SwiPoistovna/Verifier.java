@@ -357,9 +357,7 @@ public class Verifier {
      * neprekracuje maximalny povoleny prah, inac vrati {@code false}.
      * 
      */
-    public static boolean skontrolujZadanuSumu(String zadanaSuma) {
-        // skontrolovat
-
+    public static boolean skontrolujPoistnuSumu(String zadanaSuma) {
         if (zadanaSuma.equals("") || Verifier.inputContainsNumbersOnly(zadanaSuma) == false) {
             return false;
         }
@@ -376,12 +374,6 @@ public class Verifier {
         }
 
         return false;
-    }
-    
-    
-
-    public static boolean skontrolujPoistnuSumu(String suma) {
-        return true;
     }
 
     /**
