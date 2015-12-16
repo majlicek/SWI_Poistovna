@@ -15,9 +15,6 @@ import sk.upjs.ics.SwiPoistovna.DAO.InsurightDAO;
  */
 public class Poistenie {
 
-    private int id;
-    private String nazov;
-    private int dlzkaPoistenia;
     private int zadanaSuma;
     private static final RoundingMode roundingMode = RoundingMode.HALF_UP;
     private InsurightDAO insurightDAO = DaoFactory.INSTANCE.getInsurightDAO();
@@ -53,17 +50,18 @@ public class Poistenie {
                 continue iteraciaCezVsetkyPoistovne;
             }
             BigDecimal docasnaSumaTotal = new BigDecimal((this.zadanaSuma / 1000) * koef);
-
-            if (Manager.INSTANCE.getTypPoistenia() == Manager.TypPoistenia.KLESAJUCA_SUMA) {
+            if (Manager.INSTANCE.getTypPoistenia().equals(Manager.TypPoistenia.KLESAJUCA_SUMA)) {
                 docasnaSumaTotal = vyratajKlesajucuSumu(docasnaSumaTotal);
+
             }
 
             iteracaCezPripoistenia:
             for (int i = 0; i < Manager.INSTANCE.getPripoistenia().length; i++) {
-                if (i == 2 || i == 2 || i == 4) {
-                    // tabulky pre [0,2, 4]smrt urazom,trvaleNasledkyProg, praceneschopnost este 
+                if ( i == 2 || i == 4) {
+                    // tabulky pre [2, 4]trvaleNasledkyProg, praceneschopnost este 
                     // nemame, preto aby sme mali aspon 1 poistovnu v koncovom vypocte,
                     // tak tieto pripoistenia neberieme do uvahy
+                    System.out.println("Pre vybrate pripoistenie "+Manager.INSTANCE.getNazvyPripoisteni(i)+" neexistuje tabulka a preto sa nebude brat k vypoctom do uvahy.");
                     continue;
                 }
 
@@ -105,12 +103,12 @@ public class Poistenie {
             }
             docasnaSumaTotal = docasnaSumaTotal.setScale(2, roundingMode);
 
-            for (Poistovna poistovna2 : vyhovujucePoistovne) {
-                if (poistovna.equals(poistovna2)) {
-                    poistovna2.setCenaMesacna(docasnaSumaTotal);
-                    poistovna2.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(12)).setScale(2, roundingMode));
-                    poistovna2.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(6)).setScale(2, roundingMode));
-                    poistovna2.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(3)).setScale(2, roundingMode));
+            for (Poistovna vysledkovePoistovne : vyhovujucePoistovne) {
+                if (poistovna.equals(vysledkovePoistovne)) {
+                    vysledkovePoistovne.setCenaMesacna(docasnaSumaTotal);
+                    vysledkovePoistovne.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(12)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(6)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(3)).setScale(2, roundingMode));
                     break;
                 }
             }
@@ -119,65 +117,34 @@ public class Poistenie {
         return vyhovujucePoistovne;
     }
 
-    public Poistenie(int id, String nazov, int zadanaSuma) {
-        this.id = id;
-        this.nazov = nazov;
-        this.zadanaSuma = zadanaSuma;
+
+
+    public Poistenie(int poistnaSuma) {
+        this.zadanaSuma = poistnaSuma;
 
     }
 
-    public Poistenie(int zadanaSuma) {
-        this.zadanaSuma = zadanaSuma;
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNazov() {
-        return nazov;
-    }
-
-    public void setNazov(String nazov) {
-        this.nazov = nazov;
-    }
-
-    public int getDlzkaPoistenia() {
-        return dlzkaPoistenia;
-    }
-
-    public void setDlzkaPoistenia(int dlzkaPoistenia) {
-        this.dlzkaPoistenia = dlzkaPoistenia;
-    }
-
-    public int getZadanaSuma() {
+    public int getPoistnaSuma() {
         return zadanaSuma;
     }
 
-    public void setZadanaSuma(int zadanaSuma) {
-        this.zadanaSuma = zadanaSuma;
+    public void setPoistnaSuma(int poistnaSuma) {
+        this.zadanaSuma = poistnaSuma;
     }
 
-    private static BigDecimal vyratajKlesajucuSumu(BigDecimal docasSuma) {
-
+    public static BigDecimal vyratajKlesajucuSumu(BigDecimal docasSuma) {
         BigDecimal zatialNeprevedenaRocnaSuma = docasSuma;
 
         zatialNeprevedenaRocnaSuma = zatialNeprevedenaRocnaSuma.multiply(new BigDecimal(12));
 
         BigDecimal odcitanec = new BigDecimal(BigInteger.ONE);
-        odcitanec = odcitanec.multiply(zatialNeprevedenaRocnaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia())));
+        odcitanec = odcitanec.multiply(zatialNeprevedenaRocnaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia()), 2, roundingMode));
 
         BigDecimal vyslednaSuma = new BigDecimal(BigInteger.ZERO);
         for (int m = 0; m < Manager.INSTANCE.getDobaPoistenia(); m++) {
             vyslednaSuma = vyslednaSuma.add(zatialNeprevedenaRocnaSuma.subtract(odcitanec.multiply(new BigDecimal(m))));
         }
         vyslednaSuma = vyslednaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia())).setScale(2, roundingMode);
-
         return vyslednaSuma.divide(new BigDecimal(12), roundingMode).setScale(2, roundingMode);
 
     }

@@ -13,7 +13,7 @@ public enum DaoFactory {
 
     INSTANCE;
 
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbc;
 
     private DBInsurightDAO insurightDAO;
 
@@ -25,11 +25,11 @@ public enum DaoFactory {
     }
 
     public JdbcTemplate getJdbcTemplate() {
-        if (this.jdbcTemplate == null) {
-            this.jdbcTemplate = new JdbcTemplate();
-            jdbcTemplate.setDataSource(getDataSource());
+        if (this.jdbc == null) {
+            this.jdbc = new JdbcTemplate();
+            jdbc.setDataSource(getDataSource());
         }
-        return this.jdbcTemplate;
+        return this.jdbc;
     }
 
     public DataSource getDataSource() {

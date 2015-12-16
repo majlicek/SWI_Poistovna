@@ -35,6 +35,8 @@ public enum Manager {
      *   4praceneschopnost, 5hospitalizacia, 6kritickeChoroby]
      */
     private boolean[] pripoistenia = new boolean[7];
+    private String[] nazvyPripoisteni = {"Smrť spôsobená úrazom","Trvalé následky","Trvalé následky s progresívnym zhoršovaním","Nevyhnutná liečba","Práceneschopnosť","Hospitalizácia","Kritické choroby"};
+    
 
     private List<Poistovna> poistovne = new ArrayList<>();
 
@@ -125,6 +127,12 @@ public enum Manager {
 
     public boolean getPripoistenia(int index) {
         return pripoistenia[index];
+    }
+    
+    public String getNazvyPripoisteni(int index){
+        if(index >= nazvyPripoisteni.length)
+            return "N/A";
+        return nazvyPripoisteni[index];
     }
 
     public void setPripoistenia(boolean[] pripoistenia) {

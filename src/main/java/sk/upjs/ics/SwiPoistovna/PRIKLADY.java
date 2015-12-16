@@ -23,12 +23,13 @@ public class PRIKLADY {
         Manager.INSTANCE.setDobaPoistenia(15);;
         Manager.INSTANCE.setMesacnyPrijem(1000);
         Manager.INSTANCE.setTypPoistenia(Manager.TypPoistenia.KLESAJUCA_SUMA);
-        Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.PRVA);
+        Manager.INSTANCE.setRizikovaSkupina(Manager.RizikovaSkupina.TRETIA);
         Manager.INSTANCE.setRokNarodenia(1945);
         Manager.INSTANCE.setPripoistenia(0, true);
+        Manager.INSTANCE.setPripoistenia(4, true);
         Manager.INSTANCE.setPripoistenia(6, true);
         
-        System.out.println(Verifier.pridatPraceneschopnost());
+        System.out.println(Verifier.pridatPripoistenie(4));
         
         List<Poistovna> vyslednePoistovneKtoreBudemePorovnavat = p.vypocitajCeny();
         for(Poistovna poi: vyslednePoistovneKtoreBudemePorovnavat){
