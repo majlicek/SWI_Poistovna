@@ -105,10 +105,10 @@ public class Poistenie {
 
             for (Poistovna vysledkovePoistovne : vyhovujucePoistovne) {
                 if (poistovna.equals(vysledkovePoistovne)) {
-                    vysledkovePoistovne.setCenaMesacna(docasnaSumaTotal);
-                    vysledkovePoistovne.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(12)).setScale(2, roundingMode));
-                    vysledkovePoistovne.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(6)).setScale(2, roundingMode));
-                    vysledkovePoistovne.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(3)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaMesacna(docasnaSumaTotal.multiply(new BigDecimal(0.083)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(1)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(0.5)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(0.25)).setScale(2, roundingMode));
                     break;
                 }
             }
