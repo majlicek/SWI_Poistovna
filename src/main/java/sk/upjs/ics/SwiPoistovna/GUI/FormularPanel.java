@@ -7,9 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -84,7 +81,7 @@ public class FormularPanel extends JScrollPane {
             };
 
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//pomoc.png"));
+                BufferedImage imageLogo = ImageIO.read(this.getClass().getResourceAsStream("/obrazky/pomoc.png"));
                 rokNarodeniaPomoc = new JLabel(new ImageIcon(imageLogo));
                 dobaPoisteniaPomoc = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
@@ -227,7 +224,7 @@ public class FormularPanel extends JScrollPane {
             setBackground(Color.white);
 
             try {
-                BufferedImage imageDown = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//dole.png"));
+                BufferedImage imageDown = ImageIO.read(this.getClass().getResource("/obrazky/dole.png"));
                 tlacidlo = new JLabel(new ImageIcon(imageDown));
             } catch (Exception ex) {
                 //Logger.getLogger(FormularPanel.class.getName()).log(Level.SEVERE, null, ex);

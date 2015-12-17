@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -99,7 +96,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
 
                 JLabel label = new JLabel(s);
                 try {
-                    BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//poistovne//" + s.toLowerCase() + ".png"));
+                    BufferedImage imageLogo = ImageIO.read(this.getClass().getResource("/obrazky/poistovne/" + s.toLowerCase() + ".png"));
                     label = new JLabel(new ImageIcon(imageLogo));
                 } catch (Exception ex) {
                     //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);

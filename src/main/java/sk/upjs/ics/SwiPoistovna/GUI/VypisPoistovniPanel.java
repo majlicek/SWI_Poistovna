@@ -3,7 +3,6 @@ package sk.upjs.ics.SwiPoistovna.GUI;
 import java.awt.Color;
 import java.awt.Panel;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -27,7 +26,7 @@ public class VypisPoistovniPanel extends JScrollPane {
 
             JLabel logo = new JLabel();
             try {
-                BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//poistovne//" + poistovna.getNazov().toLowerCase() + ".png"));
+                BufferedImage imageLogo = ImageIO.read(this.getClass().getResource("/obrazky/poistovne/" + poistovna.getNazov().toLowerCase() + ".png"));
                 logo = new JLabel(new ImageIcon(imageLogo));
             } catch (Exception ex) {
                 //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +99,7 @@ public class VypisPoistovniPanel extends JScrollPane {
 
             JLabel image = new JLabel("ČAKAJTE PROSÍM...");
             try {
-                ImageIcon imageIcon = new ImageIcon("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//nacitavanie.gif");
+                ImageIcon imageIcon = new ImageIcon(this.getClass().getResource("/obrazky/nacitavanie.gif"));
                 image = new JLabel(imageIcon);
             } catch (Exception ex) {
                 //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);

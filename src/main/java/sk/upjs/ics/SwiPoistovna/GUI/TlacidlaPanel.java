@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -142,28 +139,28 @@ public class TlacidlaPanel extends JPanel {
         };
 
         try {
-            BufferedImage imageDomov = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//domov.png"));
+            BufferedImage imageDomov = ImageIO.read(this.getClass().getResource("/obrazky/domov.png"));
             domov = new JLabel(new ImageIcon(imageDomov));
         } catch (Exception ex) {
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            BufferedImage imageInfo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//info.png"));
+            BufferedImage imageInfo = ImageIO.read(this.getClass().getResource("/obrazky/info.png"));
             info = new JLabel(new ImageIcon(imageInfo));
         } catch (Exception ex) {
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            BufferedImage imageZrus = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//zrus.png"));
+            BufferedImage imageZrus = ImageIO.read(this.getClass().getResource("/obrazky/zrus.png"));
             zrus = new JLabel(new ImageIcon(imageZrus));
         } catch (Exception ex) {
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            BufferedImage imageOk = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//ok.png"));
+            BufferedImage imageOk = ImageIO.read(this.getClass().getResource("/obrazky/ok.png"));
             ok = new JLabel(new ImageIcon(imageOk));
         } catch (Exception ex) {
             //Logger.getLogger(TlacidlaPanel.class.getName()).log(Level.SEVERE, null, ex);
