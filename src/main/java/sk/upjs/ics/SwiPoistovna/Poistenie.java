@@ -57,11 +57,11 @@ public class Poistenie {
 
             iteracaCezPripoistenia:
             for (int i = 0; i < Manager.INSTANCE.getPripoistenia().length; i++) {
-                if ( i == 2 || i == 4) {
+                if (i == 2 || i == 4) {
                     // tabulky pre [2, 4]trvaleNasledkyProg, praceneschopnost este 
                     // nemame, preto aby sme mali aspon 1 poistovnu v koncovom vypocte,
                     // tak tieto pripoistenia neberieme do uvahy
-                    System.out.println("Pre vybrate pripoistenie "+Manager.INSTANCE.getNazvyPripoisteni(i)+" neexistuje tabulka a preto sa nebude brat k vypoctom do uvahy.");
+                    //System.out.println("Pre vybrate pripoistenie "+Manager.INSTANCE.getNazvyPripoisteni(i)+" neexistuje tabulka a preto sa nebude brat k vypoctom do uvahy.");
                     continue;
                 }
 
@@ -105,10 +105,10 @@ public class Poistenie {
 
             for (Poistovna vysledkovePoistovne : vyhovujucePoistovne) {
                 if (poistovna.equals(vysledkovePoistovne)) {
-                    vysledkovePoistovne.setCenaMesacna(docasnaSumaTotal.multiply(new BigDecimal(0.083)).setScale(2, roundingMode));
-                    vysledkovePoistovne.setCenaRocna(docasnaSumaTotal.multiply(new BigDecimal(1)).setScale(2, roundingMode));
-                    vysledkovePoistovne.setCenaPolRocna(docasnaSumaTotal.multiply(new BigDecimal(0.5)).setScale(2, roundingMode));
-                    vysledkovePoistovne.setCenaStvrtRocna(docasnaSumaTotal.multiply(new BigDecimal(0.25)).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaMesacna(docasnaSumaTotal.divide(new BigDecimal(12), 2, roundingMode).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaRocna(docasnaSumaTotal);
+                    vysledkovePoistovne.setCenaPolRocna(docasnaSumaTotal.divide(new BigDecimal(2), 2, roundingMode).setScale(2, roundingMode));
+                    vysledkovePoistovne.setCenaStvrtRocna(docasnaSumaTotal.divide(new BigDecimal(4), 2, roundingMode).setScale(2, roundingMode));
                     break;
                 }
             }
@@ -116,8 +116,6 @@ public class Poistenie {
 
         return vyhovujucePoistovne;
     }
-
-
 
     public Poistenie(int poistnaSuma) {
         this.zadanaSuma = poistnaSuma;
@@ -135,8 +133,6 @@ public class Poistenie {
     public static BigDecimal vyratajKlesajucuSumu(BigDecimal docasSuma) {
         BigDecimal zatialNeprevedenaRocnaSuma = docasSuma;
 
-        zatialNeprevedenaRocnaSuma = zatialNeprevedenaRocnaSuma.multiply(new BigDecimal(12));
-
         BigDecimal odcitanec = new BigDecimal(BigInteger.ONE);
         odcitanec = odcitanec.multiply(zatialNeprevedenaRocnaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia()), 2, roundingMode));
 
@@ -145,7 +141,7 @@ public class Poistenie {
             vyslednaSuma = vyslednaSuma.add(zatialNeprevedenaRocnaSuma.subtract(odcitanec.multiply(new BigDecimal(m))));
         }
         vyslednaSuma = vyslednaSuma.divide(new BigDecimal(Manager.INSTANCE.getDobaPoistenia())).setScale(2, roundingMode);
-        return vyslednaSuma.divide(new BigDecimal(12), roundingMode).setScale(2, roundingMode);
+        return vyslednaSuma;
 
     }
 
