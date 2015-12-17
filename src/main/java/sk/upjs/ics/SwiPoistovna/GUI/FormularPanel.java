@@ -43,10 +43,10 @@ public class FormularPanel extends JScrollPane {
         private JLabel rokNarodeniaPomoc = new JLabel("?");
         private JLabel dobaPoisteniaPomoc = new JLabel("?");
 
-        private JTextField rokNarodeniaText = new JTextField("1993");
-        private JTextField dobaPoisteniaText = new JTextField("20");
-        private JTextField mesacnyPrijemText = new JTextField("1000");
-        private JTextField poistnaSumaText = new JTextField("30000");
+        private JTextField rokNarodeniaText = new JTextField("");
+        private JTextField dobaPoisteniaText = new JTextField("");
+        private JTextField mesacnyPrijemText = new JTextField("");
+        private JTextField poistnaSumaText = new JTextField("");
 
         private ButtonGroup skupinaRiziko = new ButtonGroup();
         private ButtonGroup skupinaPraca = new ButtonGroup();

@@ -12,7 +12,7 @@ public class Insuright extends JFrame {
 
     private static final Component CENTER_SCREEN = null;
 
-    private static final int SIRKA = 700;
+    private static final int SIRKA = 750;
 
     private static final int VYSKA = 600;
 

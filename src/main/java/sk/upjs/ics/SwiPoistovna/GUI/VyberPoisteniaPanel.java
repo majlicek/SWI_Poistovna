@@ -3,6 +3,12 @@ package sk.upjs.ics.SwiPoistovna.GUI;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +26,6 @@ public class VyberPoisteniaPanel extends JScrollPane {
         private String nadpisText = "POISTENIE S FIXNOU SUMOU";
         private String obsahText = "Suma bude vyplatená v prípade smrti počas trvania poistnej zmluvy.";
 
-        
         public SmrtSFixnouSumouMoznost() {
             setLayout(new MigLayout("", "[fill, grow]"));
             setBackground(Color.white);
@@ -32,7 +37,7 @@ public class VyberPoisteniaPanel extends JScrollPane {
             obsah.setLineWrap(true);
             obsah.setEditable(false);
             obsah.setFocusable(false);
-                        
+
             add(nadpis, "cell 0 0");
             add(obsah, "cell  0 1");
         }
@@ -76,17 +81,57 @@ public class VyberPoisteniaPanel extends JScrollPane {
         }
     }
 
+    private class PodporovanePoistovne extends JPanel {
+
+        public PodporovanePoistovne() {
+            setLayout(new MigLayout("", "[fill, grow][fill, grow][fill, grow]"));
+            setBackground(Color.white);
+
+            JLabel text = new JLabel("Podporované poisťovne:");
+
+            add(text, "cell 0 0");
+
+            String[] poistovne = GuiFactory.INSTANCE.getPodporovanePoistovne();
+            int x = 3;
+            int y = 0;
+
+            for (String s : poistovne) {
+
+                JLabel label = new JLabel(s);
+                try {
+                    BufferedImage imageLogo = ImageIO.read(new File("src//main//java//sk//upjs//ics//SwiPoistovna//GUI//obrazky//poistovne//" + s.toLowerCase() + ".png"));
+                    label = new JLabel(new ImageIcon(imageLogo));
+                } catch (Exception ex) {
+                    //Logger.getLogger(LogoPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                add(label, "cell " + y % 3 + " " + x / 3);
+                x++;
+                y++;
+
+            }
+
+        }
+
+    }
+
     private JPanel panel = new JPanel();
 
     SmrtSFixnouSumouMoznost fixnaSumaMoznost = new SmrtSFixnouSumouMoznost();
     SmrtSKlesajucouSumouMoznost klesajucaSumaMoznost = new SmrtSKlesajucouSumouMoznost();
 
     public VyberPoisteniaPanel() {
-        panel.setLayout(new MigLayout("", "[fill, grow]"));
+        panel.setLayout(new MigLayout("", "[fill, grow]", "[][][fill, grow][]"));
         panel.setBackground(Color.white);
 
         panel.add(fixnaSumaMoznost, "cell 0 0");
         panel.add(klesajucaSumaMoznost, "cell 0 1");
+
+        JPanel pomocny = new JPanel();
+        pomocny.setBackground(Color.white);
+
+        panel.add(pomocny, "cell 0 2");
+        panel.add(new PodporovanePoistovne(), "cell 0 3");
 
         MouseListener fixnaSumaMoznostListener = new MouseListener() {
 

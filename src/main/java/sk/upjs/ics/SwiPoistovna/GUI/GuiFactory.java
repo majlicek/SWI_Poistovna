@@ -15,7 +15,7 @@ public enum GuiFactory {
 
     public static final String ODKAZ_NA_STRANKU = "http://s.ics.upjs.sk/~swi_poistovna/";
 
-    boolean temp = true; // false = test; true = normal
+    public static final String[] PODPOROVANE_POISTOVNE = {"AEGON", "AXA", "Wustenrot"};
 
     private static int KLASICKY_KURZOR = 0;
     private static int RUKA_KURZOR = 12;
@@ -28,6 +28,10 @@ public enum GuiFactory {
     private VypisPoistovniPanel vypisPoistovniPanel;
 
     private SwingWorker worker;
+
+    public String[] getPodporovanePoistovne() {
+        return PODPOROVANE_POISTOVNE;
+    }
 
     public Insuright getInsuright() {
         if (insuright == null) {
@@ -114,18 +118,8 @@ public enum GuiFactory {
 
                 @Override
                 protected Void doInBackground() throws Exception {
-
-                    if (temp) {
-                        Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
-                        Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
-                    } else {
-                        // wait
-                        int temp2 = Integer.MIN_VALUE;
-                        for (int i = 0; i < Integer.MAX_VALUE; i++) {
-                            temp2++;
-                        }
-                    }
-                    
+                    Poistenie poistenie = new Poistenie(Manager.INSTANCE.getPoistnaSuma());
+                    Manager.INSTANCE.setPoistovne(poistenie.vypocitajCeny());
                     return null;
                 }
 

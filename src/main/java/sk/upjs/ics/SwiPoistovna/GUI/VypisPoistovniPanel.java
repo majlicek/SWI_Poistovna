@@ -18,8 +18,6 @@ import sk.upjs.ics.SwiPoistovna.Poistovna;
 
 public class VypisPoistovniPanel extends JScrollPane {
 
-    boolean temp = true; // false = test; true = normal
-
     private class VypisPoistovne extends JPanel {
 
         public VypisPoistovne(Poistovna poistovna) {
@@ -46,21 +44,12 @@ public class VypisPoistovniPanel extends JScrollPane {
             JTextArea cenaPolrocna;
             JTextArea cenaRocna;
 
-            if (temp) {
-                nazov = new JLabel(poistovna.getNazov());
+            nazov = new JLabel(poistovna.getNazov());
 
-                cenaMesacna = new JTextArea(poistovna.getCenaMesacna().toString() + " €");
-                cenaStvrtrocna = new JTextArea(poistovna.getCenaStvrtRocna().toString() + " €");
-                cenaPolrocna = new JTextArea(poistovna.getCenaPolRocna().toString() + " €");
-                cenaRocna = new JTextArea(poistovna.getCenaRocna().toString() + " €");
-            } else {
-                nazov = new JLabel("HALAPARTNA");
-
-                cenaMesacna = new JTextArea("6544354" + " €");
-                cenaStvrtrocna = new JTextArea("6544354" + " €");
-                cenaPolrocna = new JTextArea("6544354" + " €");
-                cenaRocna = new JTextArea("6544354" + " €");
-            }
+            cenaMesacna = new JTextArea(poistovna.getCenaMesacna().toString() + " €");
+            cenaStvrtrocna = new JTextArea(poistovna.getCenaStvrtRocna().toString() + " €");
+            cenaPolrocna = new JTextArea(poistovna.getCenaPolRocna().toString() + " €");
+            cenaRocna = new JTextArea(poistovna.getCenaRocna().toString() + " €");
 
             cenaMesacna.setFocusable(false);
             cenaMesacna.setEditable(false);
@@ -162,21 +151,7 @@ public class VypisPoistovniPanel extends JScrollPane {
     public void vypisVysledok() {
         panel.remove(nacitavanie);
 
-        if (temp) {
-            poistovne = Manager.INSTANCE.getPoistovne();
-        } else {
-            Poistovna p1 = new Poistovna();
-            p1.setNazov("aegon");
-            Poistovna p2 = new Poistovna();
-            p2.setNazov("axa");
-            Poistovna p3 = new Poistovna();
-            p3.setNazov("wustenrot");
-
-            poistovne.add(p1);
-            poistovne.add(p2);
-            poistovne.add(p3);
-            //poistovne = new ArrayList<>();
-        }
+        poistovne = Manager.INSTANCE.getPoistovne();
 
         if (poistovne.isEmpty()) {
             panel.add(ziadnaPoistovna);
