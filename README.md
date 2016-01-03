@@ -28,7 +28,7 @@ v rôznych poisťovacích spoločnostiach podľa vopred zadefinovaných kritéri
 Pre bezproblémový chod aplikácie je potrebné splniť nasledujúce požiadavky.
 
 ####Rozlíšenie
-Pre korektné zobrazenie aplikácie je požadované minimálne rozlíšenie **720x576 px**. Pri nižšom rozlíšení nie je garantované
+Pre korektné zobrazenie aplikácie je požadované minimálne rozlíšenie **750x600 px**. Pri nižšom rozlíšení nie je garantované
 korektné zobrazenie a plná využiteľnosť funkcionality aplikácie.
 
 ####Softvérové požiadavky
